@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CarSafar: Everything Cars. One Complete Journey. (concept prototype)</title>
+<link rel="icon" href="img/carsafar-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0e1530;--ink2:#26304d;--mut:#66708a;--line:#e7e8ef;--bg:#f6f6f9;--card:#fff;--pri:#d9161d;--pri-d:#b31016;--pri2:#fdeced;--mint:#0fb89a;--mint2:#e3f8f3;--amber:#f2a516;--amber2:#fff5df;--red:#c81e3a;--red2:#fde8ec;--blue2:#e8f0ff;--blue:#2f6fed;--r:16px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.disc{background:var(--ink);color:#c4c8d8;font-size:11.5px;text-align:center;padding:6px 12px}
+.disc b{color:#fff}
+/* header */
+.hdr{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hin{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:22px;padding:12px 20px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:21px;letter-spacing:-.6px}
+.lg-icon{width:36px;height:36px}.lg-word{height:54px;width:auto}
+
+.nav{display:flex;gap:4px}
+.nav button{white-space:nowrap;padding:8px 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--ink2)}
+.nav button:hover,.nav button.on{background:var(--pri2);color:var(--pri)}
+.hr{margin-left:auto;display:flex;align-items:center;gap:10px}
+.citysel{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:12px;padding:7px 10px;font-size:13.5px;font-weight:600;background:#fff}
+.citysel select{border:0;background:none;font-weight:700;outline:none}
+.bell{position:relative;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;border:1px solid var(--line);background:#fff}
+.dot{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;padding:0 4px}
+.view{display:flex;background:var(--bg);border-radius:12px;padding:3px;border:1px solid var(--line)}
+.view button{padding:6px 11px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--mut)}
+.view button.on{background:var(--ink);color:#fff}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+/* hero */
+.hero{background:radial-gradient(1200px 400px at 85% -20%,#ffd9d4 0%,transparent 60%),linear-gradient(180deg,#fff,var(--bg));border-bottom:1px solid var(--line)}
+.hgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:44px 0 40px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--pri2);color:var(--pri);font-weight:700;font-size:12.5px;padding:6px 12px;border-radius:999px}
+.hero h1{font-size:44px;line-height:1.08;letter-spacing:-1.4px;margin:16px 0 12px}
+.hero h1 em{font-style:normal;color:var(--pri)}
+.hero p.sub{font-size:16.5px;color:var(--mut);line-height:1.55;margin:0 0 22px;max-width:540px}
+.askbar{display:flex;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:7px;box-shadow:0 10px 30px rgba(150,20,30,.08);max-width:560px}
+.askbar:focus-within{border-color:var(--pri)}
+.askbar input{flex:1;border:0;outline:none;padding:10px 10px;font-size:15px;background:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:12px;background:var(--pri);color:#fff;font-weight:700;font-size:14.5px;transition:.15s;white-space:nowrap}
+.btn:hover{background:var(--pri-d)}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--pri);color:var(--pri)}
+.btn.mint{background:var(--mint)}
+.btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
+.btn.full{width:100%}
+.trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:13px;color:var(--ink2);font-weight:600}
+.trust span{display:flex;align-items:center;gap:6px}
+.tick{width:18px;height:18px;border-radius:50%;background:var(--mint2);color:var(--mint);display:grid;place-items:center;font-size:11px;font-weight:800}
+.finder{background:#fff;border-radius:22px;padding:22px;box-shadow:0 20px 50px rgba(30,40,80,.12);border:1px solid var(--line)}
+.finder h3{margin:0 0 4px;font-size:18px}
+.finder .s{font-size:13px;color:var(--mut);margin-bottom:14px}
+.tabs{display:flex;gap:6px;background:var(--bg);padding:4px;border-radius:12px;margin-bottom:14px}
+.tabs button{flex:1;padding:8px;border-radius:9px;font-size:13px;font-weight:700;color:var(--mut)}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.chipset{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.ch{padding:9px 13px;border-radius:11px;border:1.5px solid var(--line);font-size:13.5px;font-weight:600;background:#fff}
+.ch:hover{border-color:var(--pri)}
+.ch.on{border-color:var(--pri);background:var(--pri2);color:var(--pri)}
+/* sections */
+.sec{padding:34px 0 8px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.sh h2{font-size:24px;letter-spacing:-.6px;margin:0}
+.sh p{margin:4px 0 0;color:var(--mut);font-size:14px}
+.link{color:var(--pri);font-weight:700;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:.18s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(30,40,80,.10);border-color:#f1d2d2}
+.art{background:linear-gradient(160deg,#f7f5f5,#efedf0);display:grid;place-items:center;height:150px;position:relative}
+.art .tag{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;background:#fff;border-radius:8px;padding:4px 8px;color:var(--ink2)}
+.cb{padding:14px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.cb .brand{font-size:12px;color:var(--mut);font-weight:600}
+.cb h4{margin:0;font-size:16.5px}
+.cb .price{font-weight:800;font-size:15.5px;margin-top:2px}
+.cb .price small{font-weight:500;color:var(--mut);font-size:11.5px}
+.cb .meta{font-size:12.5px;color:var(--mut)}
+.sw{display:flex;gap:4px;margin-top:6px}
+.sw i{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.cact{display:flex;gap:8px;margin-top:10px}
+.cact .btn{flex:1;padding:9px}
+.tabrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.brands{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.brand-t{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 8px;text-align:center;font-weight:700;font-size:14px}
+.brand-t:hover{border-color:var(--pri);color:var(--pri)}
+.mono{width:44px;height:44px;border-radius:12px;background:var(--ink);color:#fff;display:grid;place-items:center;margin:0 auto 8px;font-weight:800}
+.offers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.offer{background:linear-gradient(135deg,var(--ink),#1d2a55);color:#fff;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.offer .amt{font-size:22px;font-weight:800;color:#ffc2bd}
+.offer .d{font-size:12.5px;color:#c4c8d8}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.step .n{width:32px;height:32px;border-radius:10px;background:var(--pri2);color:var(--pri);display:grid;place-items:center;font-weight:800;margin-bottom:10px}
+.step h4{margin:0 0 6px;font-size:16px}
+.step p{margin:0;font-size:13.5px;color:var(--mut);line-height:1.5}
+footer{margin-top:50px;background:var(--ink);color:#c4c8d8;font-size:13px}
+footer .wrap{padding:30px 20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer b{color:#fff}
+/* listing */
+.lgrid{display:grid;grid-template-columns:250px 1fr;gap:22px;padding:24px 0}
+.filters{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;align-self:start;position:sticky;top:82px}
+.filters h4{margin:14px 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut)}
+.filters h4:first-child{margin-top:0}
+.filters .ch{padding:7px 10px;font-size:12.5px}
+.lhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
+.lhead h2{margin:0;font-size:22px;letter-spacing:-.5px}
+.sel{border:1.5px solid var(--line);border-radius:11px;padding:8px 10px;font-size:13.5px;background:#fff;font-weight:600}
+.lgrid .grid{grid-template-columns:repeat(3,1fr)}
+.empty{padding:40px;text-align:center;color:var(--mut);background:#fff;border-radius:16px;border:1px dashed var(--line)}
+/* model page */
+.crumb{font-size:13px;color:var(--mut);padding:18px 0 6px}
+.crumb button{color:var(--pri);font-weight:600}
+.mtop{display:grid;grid-template-columns:1.25fr 1fr;gap:26px;align-items:start}
+.gal{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px}
+.stage{border-radius:16px;height:330px;display:grid;place-items:center;position:relative;overflow:hidden;transition:background .3s}
+.stage .cname{position:absolute;left:16px;bottom:14px;background:rgba(255,255,255,.9);padding:6px 10px;border-radius:9px;font-size:13px;font-weight:700}
+.swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.swb{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--line);transition:.15s}
+.swb.on{box-shadow:0 0 0 2.5px var(--pri)}
+.info{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;position:sticky;top:82px}
+.info .brand{color:var(--mut);font-weight:600;font-size:13.5px}
+.info h1{margin:2px 0 6px;font-size:30px;letter-spacing:-.8px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px}
+.p-mint{background:var(--mint2);color:#0a8a73}.p-pri{background:var(--pri2);color:var(--pri)}.p-amb{background:var(--amber2);color:#9a6400}.p-red{background:var(--red2);color:var(--red)}.p-gr{background:var(--bg);color:var(--mut)}.p-blue{background:var(--blue2);color:var(--blue)}
+.big{font-size:28px;font-weight:800;letter-spacing:-.6px;margin-top:10px}
+.big small{font-size:13px;color:var(--mut);font-weight:500;letter-spacing:0}
+.onroad{background:var(--bg);border-radius:12px;padding:12px;margin:12px 0;font-size:13.5px}
+.onroad .row{display:flex;justify-content:space-between;padding:3px 0}
+.ctas{display:grid;gap:8px;margin-top:12px}
+.alert{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13.5px;padding:12px;border-radius:12px;border:1px solid var(--line);margin-top:10px}
+.tg{width:44px;height:26px;border-radius:13px;background:#cfcde0;position:relative;flex:none;transition:.2s}
+.tg:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tg.on{background:var(--mint)}
+.tg.on:after{left:21px}
+
+.blk{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px;scroll-margin-top:125px}
+.blk h3{margin:0 0 14px;font-size:18px}
+.specs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.spec{background:var(--bg);border-radius:12px;padding:12px}
+.spec b{display:block;font-size:14.5px}
+.spec span{font-size:12px;color:var(--mut)}
+table.vt{width:100%;border-collapse:collapse;font-size:14px}
+.vt th{text-align:left;font-size:12px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--line)}
+.vt td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.vt td small{display:block;color:var(--mut);font-size:12.5px;margin-top:2px}
+.emi{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.rng label{display:flex;justify-content:space-between;font-size:13.5px;font-weight:600;margin:10px 0 6px}
+.rng input[type=range]{width:100%;accent-color:var(--pri)}
+.emibox{background:linear-gradient(135deg,var(--pri),#ef4a3a);color:#fff;border-radius:16px;padding:20px;text-align:center}
+.emibox .v{font-size:34px;font-weight:800;letter-spacing:-1px}
+.emibox .d{font-size:12.5px;opacity:.85;line-height:1.5}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(14,21,48,.08)}
+.sticky .in{max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
+.sticky .t{flex:1;min-width:0;font-size:14px;line-height:1.35}.sticky .t b{display:block;font-size:15px}.sticky .t span{color:var(--mut);font-size:12.5px}
+.sticky .btn{padding:12px 18px}
+body.has-sticky{padding-bottom:78px}
+/* chat drawer */
+.scrim{position:fixed;inset:0;background:rgba(14,21,48,.35);z-index:60;animation:fade .2s}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100vw;background:#fff;z-index:61;display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(14,21,48,.2);animation:slide .25s ease}
+@keyframes slide{from{transform:translateX(30px);opacity:.4}}
+@keyframes fade{from{opacity:0}}
+.dh{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.dh .t{flex:1;min-width:0}
+.dh .t b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dh .t span{font-size:12px;color:var(--mut)}
+.x{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px}
+.x:hover{background:var(--bg)}
+.modeb{display:flex;align-items:center;gap:8px;padding:9px 16px;background:var(--blue2);font-size:12.5px;color:#1f4fbf}
+.modeb span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modeb button{margin-left:auto;font-weight:800;color:var(--blue);white-space:nowrap}
+.log{flex:1;overflow:auto;padding:16px;background:#faf9fe;display:flex;flex-direction:column;gap:9px}
+.msg{max-width:86%;padding:10px 13px;border-radius:16px;font-size:14px;line-height:1.48;white-space:pre-line}
+.msg.u{align-self:flex-end;background:var(--pri);color:#fff;border-bottom-right-radius:5px}
+.msg.a{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:5px}
+.msg.d{align-self:flex-start;background:var(--blue2);border-bottom-left-radius:5px}
+.msg.sys{align-self:center;background:none;color:var(--mut);font-size:12px;text-align:center;max-width:96%;padding:2px}
+.who{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:3px;letter-spacing:.2px}
+.msg.d .who{color:var(--blue)}
+.fb{display:flex;gap:5px;margin-top:7px}
+.fb button{font-size:12px;padding:2px 8px;border-radius:8px;border:1px solid var(--line);color:var(--mut)}
+.fb button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ccard{align-self:stretch;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;font-size:13.5px}
+.ccard h5{margin:0 0 6px;font-size:14.5px}
+.f{display:grid;gap:4px;font-size:12px;color:var(--mut);font-weight:600;flex:1;min-width:120px}
+.f select{border:1.5px solid var(--line);border-radius:10px;padding:8px;font-size:13.5px;background:#fff;color:var(--ink)}
+.frow{display:flex;gap:8px;flex-wrap:wrap}
+.slots{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.slot{padding:7px 10px;border:1.5px solid var(--line);border-radius:10px;font-size:12.5px;background:#fff;font-weight:600}
+.slot.on{border-color:var(--pri);background:var(--pri2);color:var(--pri)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 14px 0;border-top:1px solid var(--line);scrollbar-width:none}
+.chip{flex:none;padding:7px 12px;border-radius:999px;border:1.5px solid var(--line);font-size:12.5px;font-weight:700;background:#fff}
+.chip:hover{border-color:var(--pri);color:var(--pri)}
+.inp{display:flex;gap:8px;padding:10px 14px 14px}
+.inp input{flex:1;border:1.5px solid var(--line);border-radius:14px;padding:12px 13px;font-size:14px;outline:none}
+.inp input:focus{border-color:var(--pri)}
+.send{width:46px;border-radius:14px;background:var(--pri);color:#fff;display:grid;place-items:center;font-size:17px}
+.extra{display:flex;gap:6px;padding:8px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.typing{align-self:flex-start;color:var(--mut);font-size:12.5px;padding:2px 6px}
+.ctx{background:var(--bg);border-radius:10px;padding:9px 11px;font-size:12.5px;line-height:1.6;margin:8px 0}
+.note{padding:12px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.note small{display:block;color:var(--mut);font-size:11.5px;margin-top:3px}
+/* dealer + metrics */
+.dgrid{display:grid;grid-template-columns:360px 1fr;gap:16px;padding:24px 0}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.ph{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.ph h3{margin:0;font-size:15px;flex:1}
+.lead{display:block;width:100%;text-align:left;padding:13px 16px;border-bottom:1px solid var(--line)}
+.lead:hover,.lead.on{background:#faf9fe}
+.lead.on{box-shadow:inset 3px 0 0 var(--pri)}
+.lead .t{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800;font-size:14px}
+.lead .s{font-size:12.5px;color:var(--mut);margin-top:3px}
+.thread{display:flex;flex-direction:column;height:680px}
+.qr{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px 0;border-top:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.kpi .l{font-size:12px;color:var(--mut);font-weight:700}
+.kpi .v{font-size:28px;font-weight:800;letter-spacing:-.6px;margin-top:4px}
+.kpi .c{font-size:12px;margin-top:3px;font-weight:600}
+.kpi.ns{background:linear-gradient(135deg,var(--ink),#1d2a55);color:#fff;border:0}
+.kpi.ns .l{color:#c4c8d8}
+.mgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}
+.box h3{margin:0 0 4px;font-size:16px}
+.box .sub{font-size:12.5px;color:var(--mut);margin-bottom:12px}
+.fun{display:grid;gap:8px}
+.fr{display:grid;grid-template-columns:160px 1fr 60px;gap:10px;align-items:center;font-size:13px}
+.fbar{height:28px;background:var(--bg);border-radius:8px;overflow:hidden}
+.fbar>div{height:100%;background:linear-gradient(90deg,var(--pri),#ff6b5b);border-radius:8px;display:flex;align-items:center;padding-left:8px;color:#fff;font-size:12px;font-weight:800;min-width:max-content}
+.conv{font-size:12px;color:var(--mut);text-align:right;font-weight:700}
+.gr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.gr:last-child{border:0}
+.live{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.live div{background:var(--bg);border-radius:12px;padding:10px}
+.live b{display:block;font-size:20px}
+.live span{font-size:11.5px;color:var(--mut)}
+.carphoto{width:100%;height:auto;object-fit:contain;mix-blend-mode:multiply;display:block;margin:0 auto}
+.heart{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:2}
+.heart.on{background:var(--red2);color:var(--red)}
+.appbadge{font-size:11.5px;font-weight:800;padding:5px 9px;border-radius:999px;background:var(--amber2);color:#9a6400;white-space:nowrap}
+.appbadge.on{background:var(--mint2);color:#0a8a73}
+.feat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.ft{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;text-align:left}
+.ft:hover{border-color:var(--pri);box-shadow:0 10px 26px rgba(30,40,80,.08)}
+.ft .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px}
+.ft h4{margin:2px 0 0;font-size:16px}.ft p{margin:0;font-size:13px;color:var(--mut);line-height:1.5}.ft .go{margin-top:auto;font-weight:700;font-size:13.5px;color:var(--pri)}
+.mback{position:fixed;inset:0;background:rgba(14,21,48,.45);z-index:80;display:grid;place-items:center;padding:16px;animation:fade .2s}
+.modal{background:#fff;border-radius:22px;width:min(520px,100%);max-height:92vh;overflow:auto;padding:24px;box-shadow:0 30px 80px rgba(14,21,48,.3)}
+.modal h3{margin:0 0 4px;font-size:21px;letter-spacing:-.4px}.modal .s{color:var(--mut);font-size:13.5px;margin-bottom:16px;line-height:1.5}
+.steps{display:flex;gap:5px;margin-bottom:16px}.steps i{flex:1;height:5px;border-radius:3px;background:var(--line)}.steps i.on{background:var(--pri)}
+.opt{display:block;width:100%;text-align:left;padding:13px 14px;border:1.5px solid var(--line);border-radius:13px;margin-bottom:8px;font-weight:600;font-size:14.5px}
+.opt:hover{border-color:var(--pri)}.opt.on{border-color:var(--pri);background:var(--pri2);color:var(--pri)}
+.opt small{display:block;color:var(--mut);font-weight:500;font-size:12.5px;margin-top:2px}
+.rank{display:flex;align-items:center;gap:10px}.rank b{width:26px;height:26px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-size:13px;flex:none}
+.mfoot{display:flex;gap:8px;justify-content:space-between;margin-top:16px}
+.ring{--v:0;width:84px;height:84px;border-radius:50%;background:conic-gradient(var(--c,var(--pri)) calc(var(--v)*1%),#f1ecec 0);display:grid;place-items:center;flex:none}
+.ring span{width:66px;height:66px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:22px}
+.dsr{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.dsr.top{border:2px solid var(--pri);box-shadow:0 12px 30px rgba(217,22,29,.12)}
+.dsr .why{font-size:13.5px;line-height:1.5;color:var(--ink2);margin:4px 0 8px}
+.bars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:11.5px;color:var(--mut)}
+.bars div>i{display:block;height:6px;border-radius:3px;background:#f1ecec;margin-top:3px;overflow:hidden}.bars div>i>i{display:block;height:100%;background:var(--pri)}
+table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff}
+.cmp th,.cmp td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.cmp th{font-size:12px;color:var(--mut);font-weight:700;width:160px}
+.cbanner{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:35;background:var(--ink);color:#fff;border-radius:18px;padding:12px 14px 12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 18px 50px rgba(14,21,48,.35);width:min(620px,calc(100vw - 24px));animation:fade .3s}
+.cbanner .t{flex:1;font-size:13.5px;line-height:1.4}.cbanner .t b{color:#ffc2bd}
+.locked{align-self:stretch;background:linear-gradient(135deg,#fff0ee,#fff7f2);border:1.5px dashed #f2a7a2;border-radius:16px;padding:14px;font-size:13.5px;text-align:center}
+.seg{display:inline-flex;background:var(--bg);border-radius:11px;padding:3px;gap:3px}.seg button{padding:7px 12px;border-radius:9px;font-weight:700;font-size:13px;color:var(--mut)}.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.resale{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center}
+.rbox{border-radius:16px;padding:18px;background:linear-gradient(135deg,var(--ink),#1d2a55);color:#fff}
+.rbox .k{font-size:12.5px;color:#c4c8d8}.rbox .v{font-size:28px;font-weight:800;letter-spacing:-.6px}.rbox .l{color:#7ee2c8}
+@media(max-width:1180px){.nav button:last-child{display:none}.hin{gap:14px}}
+@media(max-width:1000px){.nav button{padding:8px 9px;font-size:13.5px}.appbadge .long{display:none}.feat{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.resale{grid-template-columns:1fr}.cbanner{bottom:78px}}
+@media(max-width:560px){.feat{grid-template-columns:1fr}.dsr{flex-direction:column;align-items:flex-start}.cmp th{width:110px}}
+.mnav{position:sticky;top:var(--hh,65px);z-index:25;background:rgba(246,245,251,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin:0}
+.mnin{display:flex;gap:4px;overflow-x:auto;align-items:center;scrollbar-width:none}
+.mnav a{padding:12px 12px;font-weight:700;font-size:13.5px;color:var(--mut);border-bottom:2.5px solid transparent;white-space:nowrap}
+.mnav a.on,.mnav a:hover{color:var(--pri);border-bottom-color:var(--pri)}
+.offerbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,#fff5df,#ffe9c2);border:1px solid #f6d58e;border-radius:14px;padding:12px 14px;margin:4px 0 12px;font-size:14px}
+.offerbar small{color:#7a5a12;font-size:12.5px}.offerbar .go{font-weight:800;color:#9a6400;white-space:nowrap}
+.offerbar:hover{box-shadow:0 8px 20px rgba(242,165,22,.2)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{display:flex;gap:10px;align-items:center;padding:10px 11px;border:1px solid var(--line);border-radius:13px;background:#fff;transition:.15s}
+.tile:hover{border-color:var(--pri);background:var(--pri2)}
+.tile .ic{width:34px;height:34px;border-radius:10px;background:var(--bg);display:grid;place-items:center;font-size:17px;flex:none}
+.tile b{display:block;font-size:13.5px}.tile small{display:block;font-size:12px;color:var(--mut)}
+.bh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.bh h3{margin:0}
+.offs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.off{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--bg)}
+.off .k{font-size:12.5px;color:var(--mut);font-weight:700}.off .v{font-size:22px;font-weight:800;letter-spacing:-.4px;margin:3px 0}.off .d{font-size:12px;color:var(--mut)}
+.off.tot{background:linear-gradient(135deg,var(--ink),#1d2a55);color:#fff;border:0}.off.tot .k{color:#c4c8d8}.off.tot .v{color:#7ee2c8}
+@media(max-width:820px){.offs{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.blk{overflow-x:auto}.vt{font-size:13px}.vt td,.vt th{padding:9px 6px}.tiles{grid-template-columns:1fr 1fr}.tile{padding:9px}.tile .ic{display:none}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 16px;border-radius:14px;font-size:13.5px;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:92vw;animation:fade .2s}
+@media(max-width:1180px){.nav button:last-child{display:none}.hin{gap:14px}}
+@media(max-width:1000px){.nav button{padding:8px 9px;font-size:13.5px}.appbadge .long{display:none}.grid{grid-template-columns:repeat(3,1fr)}.lgrid .grid{grid-template-columns:repeat(2,1fr)}.brands{grid-template-columns:repeat(4,1fr)}.offers{grid-template-columns:repeat(2,1fr)}.specs{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.hgrid,.mtop,.dgrid,.mgrid,.emi{grid-template-columns:1fr}.hero h1{font-size:34px}.nav{display:none}.lgrid{grid-template-columns:1fr}.filters{position:static}.info{position:static}.kpis{grid-template-columns:repeat(2,1fr)}.fr{grid-template-columns:110px 1fr 50px}.thread{height:560px}.how{grid-template-columns:1fr}
+  .sticky .t{display:none}.sticky .in{padding:10px 14px}.sticky .btn{flex:1}}
+.hgrid>div,.mtop>div{min-width:0}.askbar input{min-width:0}
+@media(max-width:560px){.lg-word{height:42px}.lg-icon{width:30px;height:30px}.hin{flex-wrap:wrap}.hr{margin-left:auto;gap:6px}.view{order:3;width:100%;justify-content:space-between}.view button{flex:1}.citysel{padding:6px 8px}.grid,.lgrid .grid{grid-template-columns:1fr 1fr}.hin{gap:10px;padding:10px 12px}.wrap{padding:0 12px}.citysel span{display:none}.view button{padding:6px 8px}.logo{font-size:18px}.art{height:110px}.cact{flex-direction:column}.offers{grid-template-columns:1fr}.stage{height:230px}.hero h1{font-size:30px}.drawer{width:100vw}}
+</style>
+</head>
+<body>
+<div class="disc"><b>Concept prototype</b> for a product case study · Not affiliated with or endorsed by any car marketplace or manufacturer · Prices, colours and specs are indicative sample data</div>
+<header class="hdr"><div class="hin">
+  <button class="logo" data-act="go" data-to="home" aria-label="CarSafar home"><img src="img/carsafar-wordmark.png" alt="CarSafar" class="lg-word"></button>
+  <nav class="nav" id="nav"></nav>
+  <div class="hr">
+    <label class="citysel">📍<span>City</span><select data-act="city" aria-label="City" id="citysel"></select></label>
+    <button class="bell" data-act="notes" aria-label="Notifications">🔔<span id="bdot"></span></button>
+  </div>
+</div></header>
+<main id="page"></main>
+<div id="drawer"></div>
+<div id="modalc"></div>
+<div id="toastc"></div>
+
+<script>
+/*ENGINE*/
+</script>
+<script>
+// ================= State =================
+const S = {
+  view: "buyer", route: "home", carId: null, city: "Delhi",
+  homeTab: "SUV", finderTab: "budget",
+  filters: { budget: null, body: null, brand: null, fuel: null, sort: "pop" },
+  color: {},                // carId -> colour index
+  alerts: {}, ai: {}, threads: {}, leads: [], buyerLead: {}, activeLead: null,
+  chat: null,               // { carId | null, mode: 'ai'|'dealer' }
+  notes: [], unread: 0, afterHours: false, notesOpen: false,
+  emi: { down: 20, months: 60 },
+  live: { views: 0, chats: 0, aiResolved: 0, handoffs: 0, dealerReplies: 0, testDrives: 0, thumbsDown: 0, spam: 0, alerts: 0 },
+  typing: false, dtyping: false,
+  inApp: true, shortlist: ["creta", "seltos", "hyryder"], dsAns: null, dsDraft: null, modal: null, pendingAfterInstall: null,
+  bannerDismissed: {}, bannerFor: null, locks: {}, resale: { years: 3, km: 12000 }
+};
+S.live.installs = 0; S.live.masked = 0;
+let msgId = 0;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const car = id => CARS.find(c => c.id === id);
+const BODY_GROUP = { hatch: "Hatchback", tallhatch: "Hatchback", sedan: "Sedan", micro: "SUV", csuv: "SUV", suv: "SUV", bigsuv: "SUV", muv: "MUV" };
+const POP = ["creta", "swift", "nexon", "punch", "brezza", "dzire", "fronx", "xuv3xo", "baleno", "venue", "sonet", "ertiga", "seltos", "wagonr", "i20", "exter", "altroz", "scorpion", "hyryder", "amaze"];
+const BRANDS = ["Maruti", "Hyundai", "Tata", "Mahindra", "Kia", "Honda", "Toyota"];
+const BUDGETS = [["Under ₹6 lakh", 0, 600000], ["₹6–8 lakh", 600000, 800000], ["₹8–10 lakh", 800000, 1000000], ["₹10–15 lakh", 1000000, 1500000], ["₹15 lakh+", 1500000, 9e9]];
+const OFFERS = [["altroz", 40000, "Cash + exchange"], ["venue", 50000, "Year-end benefit"], ["nexon", 30000, "Corporate + exchange"], ["baleno", 35000, "Cash discount"]];
+const HERO = { swift: 2, wagonr: 2, baleno: 1, dzire: 4, fronx: 1, brezza: 1, ertiga: 1, creta: 0, venue: 4, i20: 3, exter: 1, nexon: 4, punch: 1, altroz: 1, xuv3xo: 2, scorpion: 1, sonet: 3, seltos: 2, amaze: 3, hyryder: 5 };
+CARS.forEach(c => { if (S.color[c.id] == null) S.color[c.id] = HERO[c.id] || 0; });
+const colorOf = c => c.colors[S.color[c.id] ?? 0];
+const minsAgo = m => m < 1 ? "just now" : m < 60 ? m + " min ago" : Math.round(m / 60) + " h ago";
+function toast(t) { const d = document.createElement("div"); d.className = "toast"; d.textContent = t; $("#toastc").appendChild(d); setTimeout(() => d.remove(), 2800); }
+const priceRange = c => `${lakh(c.variants[0].p)} – ${lakh(c.variants[c.variants.length - 1].p).replace("₹", "").replace(" lakh", "")} lakh`;
+
+// ================= Car visuals =================
+// PHOTOS[carId] = image data URI or artifact-relative path (e.g. "img/creta.jpg"); drawings are the fallback.
+const PHOTOS = {};
+// One photo per colour: img/cars/<id>-<colour index>.jpg (the photo colour is the original; other colours are recoloured)
+["creta", "nexon", "punch", "brezza", "fronx", "xuv3xo", "venue", "sonet", "dzire", "amaze", "ertiga", "swift", "baleno", "wagonr", "i20", "altroz"].forEach(id => PHOTOS[id] = true);
+function carVisual(c, w, colourIdx) {
+  const ph = PHOTOS[c.id] && `img/cars/${c.id}-${colourIdx ?? (S.color[c.id] ?? 0)}.jpg`;
+  if (ph) return `<img src="${ph}" alt="${esc(c.name)}" class="carphoto" style="max-width:${w}px;max-height:${Math.round(w * 0.6)}px">`;
+  return carArt(c.body, c.colors[colourIdx ?? (S.color[c.id] ?? 0)].h, w);
+}
+function shade(hex, amt) { let n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; const f = v => Math.max(0, Math.min(255, Math.round(v + amt * (amt > 0 ? 255 - v : v)))); return `rgb(${f(r)},${f(g)},${f(b)})`; }
+const SHAPES = {
+  hatch:     { x0: 22, x1: 212, ws: 76, rs: 104, ry: 23, re: 168, rg: 204, hood: 47 },
+  tallhatch: { x0: 26, x1: 206, ws: 84, rs: 100, ry: 15, re: 178, rg: 203, hood: 46 },
+  sedan:     { x0: 10, x1: 230, ws: 78, rs: 106, ry: 27, re: 156, rg: 190, hood: 50 },
+  micro:     { x0: 24, x1: 210, ws: 78, rs: 98, ry: 17, re: 176, rg: 205, hood: 42 },
+  csuv:      { x0: 16, x1: 220, ws: 72, rs: 98, ry: 18, re: 182, rg: 212, hood: 42 },
+  suv:       { x0: 10, x1: 230, ws: 70, rs: 98, ry: 16, re: 194, rg: 222, hood: 41 },
+  bigsuv:    { x0: 12, x1: 228, ws: 80, rs: 92, ry: 11, re: 212, rg: 226, hood: 38 },
+  muv:       { x0: 8,  x1: 232, ws: 72, rs: 100, ry: 18, re: 206, rg: 228, hood: 45 }
+};
+let artN = 0;
+function carArt(body, hex, w = 220) {
+  const s = SHAPES[body], id = "g" + (++artN), wr = 17, gy = 84, w1 = s.x0 + 44, w2 = s.x1 - 44;
+  const light = parseInt(hex.slice(1), 16) > 0xd8d8d8;
+  const path = `M${s.x0} ${gy - 4} L${s.x0} 64 Q${s.x0} ${s.hood + 4} ${s.x0 + 12} ${s.hood + 1} L${s.ws} ${s.hood - 1} L${s.rs} ${s.ry} Q${s.rs + 3} ${s.ry - 2} ${s.rs + 10} ${s.ry - 2} L${s.re} ${s.ry - 2} Q${s.re + 6} ${s.ry - 1} ${s.re + 9} ${s.ry + 4} L${s.rg} ${s.hood + 1} L${s.x1 - 4} ${s.hood + 3} Q${s.x1} ${s.hood + 5} ${s.x1} ${s.hood + 11} L${s.x1} ${gy - 4} L${w2 + wr + 3} ${gy - 4} A${wr + 3} ${wr + 3} 0 0 0 ${w2 - wr - 3} ${gy - 4} L${w1 + wr + 3} ${gy - 4} A${wr + 3} ${wr + 3} 0 0 0 ${w1 - wr - 3} ${gy - 4} Z`;
+  const glass = `M${s.ws + 9} ${s.hood - 2} L${s.rs + 3} ${s.ry + 5} L${s.re + 1} ${s.ry + 5} L${Math.min(s.rg - 6, s.re + 22)} ${s.hood - 2} Z`;
+  const bp = Math.round((s.rs + s.re) / 2 + 4);
+  const wheel = x => `<circle cx="${x}" cy="${gy}" r="${wr}" fill="#1b1c22"/><circle cx="${x}" cy="${gy}" r="${wr - 6}" fill="#c9ccd3"/><circle cx="${x}" cy="${gy}" r="${wr - 9}" fill="#8d919a"/><circle cx="${x}" cy="${gy}" r="2.4" fill="#1b1c22"/>`;
+  return `<svg width="${w}" height="${w * 0.46}" viewBox="0 0 240 110" style="width:100%;max-width:${w}px;height:auto" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${shade(hex, .28)}"/><stop offset=".55" stop-color="${hex}"/><stop offset="1" stop-color="${shade(hex, -.32)}"/></linearGradient></defs>
+  <ellipse cx="120" cy="${gy + 15}" rx="${(s.x1 - s.x0) / 2 + 6}" ry="6" fill="#1b1c22" opacity=".13"/>
+  <path d="${path}" fill="url(#${id})" stroke="${light ? "rgba(0,0,0,.22)" : "rgba(0,0,0,.25)"}" stroke-width="1"/>
+  <path d="${glass}" fill="#26303d" opacity=".88"/><path d="M${s.rs + 8} ${s.ry + 7} L${s.rs + 26} ${s.ry + 7} L${s.rs + 12} ${s.hood - 4} Z" fill="#fff" opacity=".18"/>
+  <line x1="${bp}" y1="${s.ry + 5}" x2="${bp - 3}" y2="${s.hood - 2}" stroke="${hex}" stroke-width="3.5"/>
+  <path d="M${s.ws + 4} ${s.hood + 6} L${bp - 3} ${s.hood + 6} M${bp + 2} ${s.hood + 6} L${s.rg - 2} ${s.hood + 6}" stroke="rgba(0,0,0,.18)" stroke-width="1"/>
+  <line x1="${bp - 2}" y1="${s.hood + 4}" x2="${bp - 4}" y2="${gy - 8}" stroke="rgba(0,0,0,.18)" stroke-width="1"/>
+  <rect x="${s.x0 + 2}" y="${s.hood + 6}" width="11" height="5" rx="2.5" fill="#fff6d6"/><rect x="${s.x1 - 8}" y="${s.hood + 8}" width="7" height="6" rx="2" fill="#d4202e"/>
+  ${wheel(w1)}${wheel(w2)}</svg>`;
+}
+
+// ================= Routing =================
+function go(route, carId) {
+  S.route = route; if (carId) S.carId = carId;
+  if (route === "model") S.live.views++;
+  location.hash = route === "model" ? "car-" + carId : route;
+  renderPage(); window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", () => {
+  const h = location.hash.slice(1);
+  if (h.startsWith("car-") && car(h.slice(4))) { if (S.route !== "model" || S.carId !== h.slice(4)) { S.route = "model"; S.carId = h.slice(4); renderPage(); window.scrollTo(0, 0); } }
+  else if (["home", "cars", "shortlist", "dealer", "metrics"].includes(h) && h !== S.route) { S.route = h; S.view = h === "dealer" ? "dealer" : h === "metrics" ? "metrics" : "buyer"; renderPage(); }
+});
+
+// ================= Header =================
+function renderHeader() {
+  $("#nav").innerHTML = [["home", "Home"], ["cars", "New cars"], ["shortlist", `Shortlist${S.shortlist.length ? " (" + S.shortlist.length + ")" : ""}`], ["ds", "Decision Score"], ["cars-under8", "Under ₹8 lakh"]].map(([k, l]) => `<button data-act="nav" data-k="${k}" class="${S.view === "buyer" && ((k === "home" && S.route === "home") || (k === "shortlist" && S.route === "shortlist") || (k === "cars" && S.route === "cars" && !S.filters.body && !S.filters.budget && !S.filters.maxp)) ? "on" : ""}">${l}</button>`).join("");
+  $("#citysel").innerHTML = Object.keys(CITIES).map(c => `<option ${c === S.city ? "selected" : ""}>${c}</option>`).join("");
+  $("#bdot").innerHTML = S.unread ? `<span class="dot">${S.unread}</span>` : "";
+  document.querySelector(".hdr").style.display = S.view === "buyer" ? "" : "none";
+}
+
+// ================= Cards =================
+function carCard(c, tag) {
+  const col = colorOf(c);
+  return `<div class="card" style="position:relative"><button class="heart ${S.shortlist.includes(c.id) ? "on" : ""}" data-act="sl" data-id="${c.id}" aria-label="Shortlist ${esc(c.name)}">${S.shortlist.includes(c.id) ? "♥" : "♡"}</button><button class="art" data-act="open" data-id="${c.id}" aria-label="${esc(c.name)}">${tag ? `<span class="tag">${tag}</span>` : ""}${carVisual(c, 210)}</button>
+  <div class="cb"><span class="brand">${c.brand} · ${c.type}</span><h4>${esc(c.model)}</h4>
+  <div class="price">${priceRange(c)} <small>ex-showroom</small></div>
+  <div class="meta">${c.fuel.split(" / ")[0]}${c.fuel.includes("/") ? "+" : ""} · ${c.mileage} kmpl · ${c.seats} seats</div>
+  <div class="sw">${c.colors.map(k => `<i style="background:${k.h}" title="${esc(k.n)}"></i>`).join("")}</div>
+  <div class="cact"><button class="btn ghost sm" data-act="open" data-id="${c.id}">View details</button><button class="btn sm" data-act="ask" data-id="${c.id}">💬 Ask</button></div></div></div>`;
+}
+
+// ================= Pages =================
+function renderPage() {
+  renderHeader();
+  requestAnimationFrame(() => { const h = document.querySelector(".hdr"); if (h) document.documentElement.style.setProperty("--hh", h.offsetHeight + "px"); });
+  document.body.classList.toggle("has-sticky", S.view === "buyer" && S.route === "model");
+  if (S.route !== "model" || S.view !== "buyer") { clearTimeout(bannerTimer); const bn = document.getElementById("cbanner"); if (bn) bn.remove(); }
+  if (S.view === "dealer") return renderDealer();
+  if (S.view === "metrics") return renderMetrics();
+  if (S.route === "cars") return renderListing();
+  if (S.route === "model") return renderModel();
+  if (S.route === "shortlist") return renderShortlist();
+  return renderHome();
+}
+function renderHome() {
+  const tabCars = POP.map(car).filter(c => BODY_GROUP[c.body] === S.homeTab);
+  const budgetCars = POP.map(car).filter(c => c.variants[0].p < 800000).slice(0, 4);
+  const fTab = S.finderTab;
+  $("#page").innerHTML = `
+  <section class="hero"><div class="wrap hgrid">
+   <div><span class="eyebrow">🚗 Discover · Compare · Connect · Purchase</span>
+    <h1>Ask anything about a car. <em>Talk to a dealer</em> only when you're ready.</h1>
+    <p class="sub">On-road prices, EMIs, variants and colours, answered instantly. For stock, delivery and offers, a verified dealer replies in chat, and your number stays hidden.</p>
+    <form class="askbar" data-act="heroask"><input id="heroq" placeholder="e.g. Is a white Creta available for quick delivery?" autocomplete="off"><button class="btn">Ask CarSafar</button></form>
+    <div class="trust"><span><i class="tick">✓</i>Answers from verified data</span><span><i class="tick">✓</i>Number hidden by default</span><span><i class="tick">✓</i>Verified dealers only</span></div>
+   </div>
+   <div class="finder"><h3>Find your car</h3><div class="s">${CARS.length} popular cars · ${Object.keys(CITIES).length} cities · on-road prices for ${S.city}</div>
+    <div class="tabs">${[["budget", "By budget"], ["brand", "By brand"], ["body", "By body type"]].map(([k, l]) => `<button class="${fTab === k ? "on" : ""}" data-act="ftab" data-k="${k}">${l}</button>`).join("")}</div>
+    <div class="chipset">${fTab === "budget" ? BUDGETS.map((b, i) => `<button class="ch" data-act="fpick" data-t="budget" data-v="${i}">${b[0]}</button>`).join("")
+      : fTab === "brand" ? BRANDS.map(b => `<button class="ch" data-act="fpick" data-t="brand" data-v="${b}">${b}</button>`).join("")
+      : ["SUV", "Hatchback", "Sedan", "MUV"].map(b => `<button class="ch" data-act="fpick" data-t="body" data-v="${b}">${b}</button>`).join("")}</div>
+    <button class="btn full" data-act="nav" data-k="cars">Browse all ${CARS.length} cars →</button>
+   </div></div></section>
+  <div class="wrap">
+   <section class="sec"><div class="sh"><div><h2>Everything to decide, in one app</h2><p>From "which car?" to "keys in hand", without a single cold call</p></div></div>
+    <div class="feat">
+     <button class="ft" data-act="ask" data-id="creta"><span class="ic" style="background:var(--pri2)">💬</span><h4>Chat with a verified dealer</h4><p>Instant answers first, then a dealer in the same thread. Your number stays hidden.</p><span class="go">Start a chat →</span></button>
+     <button class="ft" data-act="nav" data-k="ds"><span class="ic" style="background:var(--mint2)">🎯</span><h4>Decision Score</h4><p>Answer 5 questions and get a personalised score out of 100 for every car on your shortlist.</p><span class="go">Find my best match →</span></button>
+     <button class="ft" data-act="tdhome"><span class="ic" style="background:var(--amber2)">🚗</span><h4>Book a test drive</h4><p>Pick a slot at the showroom or at home. The dealer confirms in chat.</p><span class="go">Book a slot →</span></button>
+     <button class="ft" data-act="open" data-id="creta" data-jump="resale"><span class="ic" style="background:var(--blue2)">🔒</span><h4>Resale Lock-In</h4><p>See what your car will be worth in 3–5 years, and lock a guaranteed buy-back price today.</p><span class="go">Check resale value →</span></button>
+    </div></section>
+   <section class="sec"><div class="sh"><div><h2>Popular with Indian families</h2><p>Most-asked-about cars this month</p></div><button class="link" data-act="nav" data-k="cars">View all →</button></div>
+    <div class="tabrow">${["SUV", "Hatchback", "Sedan", "MUV"].map(t => `<button class="ch ${S.homeTab === t ? "on" : ""}" data-act="htab" data-k="${t}">${t}s</button>`).join("")}</div>
+    <div class="grid">${tabCars.slice(0, 8).map((c, i) => carCard(c, i === 0 ? "🔥 Most asked" : "")).join("")}</div></section>
+   <section class="sec"><div class="sh"><div><h2>Sample dealer offers this month</h2><p>Posted by verified dealers in ${S.city}. Ask in chat to confirm.</p></div></div>
+    <div class="offers">${OFFERS.map(([id, amt, t]) => { const c = car(id); return `<button class="offer" data-act="open" data-id="${id}" style="text-align:left"><span class="d">${t}</span><span class="amt">Up to ${inr(amt)}</span><b>${esc(c.name)}</b><span class="d">Tap to ask a dealer →</span></button>`; }).join("")}</div></section>
+   <section class="sec"><div class="sh"><div><h2>Under ₹8 lakh</h2><p>Starting ex-showroom price</p></div><button class="link" data-act="nav" data-k="cars-under8">View all →</button></div>
+    <div class="grid">${budgetCars.map(c => carCard(c)).join("")}</div></section>
+   <section class="sec"><div class="sh"><div><h2>Browse by brand</h2></div></div>
+    <div class="brands">${BRANDS.map(b => `<button class="brand-t" data-act="fpick" data-t="brand" data-v="${b}"><div class="mono">${b[0]}</div>${b}<div style="font-size:11.5px;color:var(--mut);font-weight:500">${CARS.filter(c => c.brand === b).length} models</div></button>`).join("")}</div></section>
+   <section class="sec"><div class="sh"><div><h2>How CarSafar works</h2></div></div>
+    <div class="how"><div class="step"><div class="n">1</div><h4>Ask anything, any time</h4><p>Price, EMI, variants and colours are answered instantly from verified data, even at midnight.</p></div>
+    <div class="step"><div class="n">2</div><h4>One tap to a verified dealer</h4><p>For stock, delivery or offers, your question goes to a dealer with your car, colour, budget and timeline attached, so you never repeat yourself.</p></div>
+    <div class="step"><div class="n">3</div><h4>Book, compare, decide</h4><p>Replies, test-drive slots and price-drop alerts all live in one thread. Your number is shared only if you choose.</p></div></div></section>
+  </div>${footer()}`;
+}
+function footer() { return `<footer><div class="wrap"><div style="display:flex;gap:12px;align-items:center"><img src="img/carsafar-icon.png" alt="" style="width:40px;height:40px"><div><b style="font-size:16px">CarSafar</b> · Everything Cars. One Complete Journey.<br><span style="font-size:12px">Concept prototype for a product case study</span><br><span style="font-size:12px">Sample data only · Not affiliated with any marketplace or manufacturer</span></div></div><div style="display:flex;gap:18px;align-items:center"><button data-act="view" data-v="dealer" style="color:#fff;font-weight:700">Dealer partners →</button></div></div></footer>`; }
+
+function filtered() {
+  const f = S.filters;
+  let list = CARS.filter(c => {
+    if (f.budget != null) { const b = BUDGETS[f.budget]; if (c.variants[0].p < b[1] || c.variants[0].p >= b[2]) return false; }
+    if (f.body && BODY_GROUP[c.body] !== f.body) return false;
+    if (f.brand && c.brand !== f.brand) return false;
+    if (f.fuel && !c.fuel.includes(f.fuel)) return false;
+    return true;
+  });
+  if (f.sort === "low") list.sort((a, b) => a.variants[0].p - b.variants[0].p);
+  else if (f.sort === "high") list.sort((a, b) => b.variants[0].p - a.variants[0].p);
+  else if (f.sort === "mileage") list.sort((a, b) => b.mileage - a.mileage);
+  else list.sort((a, b) => POP.indexOf(a.id) - POP.indexOf(b.id));
+  return list;
+}
+function renderListing() {
+  const f = S.filters, list = filtered();
+  const chip = (t, v, l) => `<button class="ch ${f[t] === v ? "on" : ""}" data-act="filt" data-t="${t}" data-v="${v}">${l}</button>`;
+  const title = [f.brand, f.body ? f.body + "s" : null, f.budget != null ? BUDGETS[f.budget][0].toLowerCase() : null].filter(Boolean).join(" · ") || (f.maxp ? "Cars under ₹8 lakh" : "All new cars");
+  $("#page").innerHTML = `<div class="wrap"><div class="crumb"><button data-act="go" data-to="home">Home</button> › New cars</div>
+  <div class="lgrid"><aside class="filters">
+    <h4>Budget</h4><div class="chipset">${BUDGETS.map((b, i) => chip("budget", i, b[0])).join("")}</div>
+    <h4>Body type</h4><div class="chipset">${["SUV", "Hatchback", "Sedan", "MUV"].map(b => chip("body", b, b)).join("")}</div>
+    <h4>Brand</h4><div class="chipset">${BRANDS.map(b => chip("brand", b, b)).join("")}</div>
+    <h4>Fuel</h4><div class="chipset">${["Petrol", "Diesel", "CNG", "Hybrid"].map(b => chip("fuel", b, b)).join("")}</div>
+    <button class="btn ghost sm full" data-act="clear" style="margin-top:6px">Clear filters</button>
+  </aside><div>
+    <div class="lhead"><div><h2>${esc(title[0].toUpperCase() + title.slice(1))}</h2><div style="font-size:13px;color:var(--mut)">${list.length} car${list.length === 1 ? "" : "s"} · prices ex-showroom</div></div>
+    <select class="sel" data-act="sort" aria-label="Sort">${[["pop", "Popularity"], ["low", "Price: low to high"], ["high", "Price: high to low"], ["mileage", "Best mileage"]].map(([k, l]) => `<option value="${k}" ${f.sort === k ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+    ${list.length ? `<div class="grid">${list.map(c => carCard(c)).join("")}</div>` : `<div class="empty">No cars match these filters. <button class="link" data-act="clear">Clear filters</button></div>`}
+  </div></div></div>${footer()}`;
+}
+
+function carOffers(c) {
+  const base = c.variants[0].p, h = CARS.indexOf(c);
+  return [
+    { t: "Cash discount", v: Math.round(base * 0.025 / 1000) * 1000, d: "On select variants, while stocks last" },
+    { t: "Exchange bonus", v: 15000 + (h % 4) * 5000, d: "When you trade in your current car" },
+    { t: "Corporate offer", v: 5000 + (h % 3) * 2500, d: "For employees of listed companies" }
+  ];
+}
+function renderModel() {
+  const c = car(S.carId), ci = S.color[c.id] ?? 0, col = c.colors[ci], r0 = onRoad(c.variants[0].p, S.city), d = dealerFor(c, S.city);
+  const similar = CARS.filter(x => x.id !== c.id && BODY_GROUP[x.body] === BODY_GROUP[c.body]).sort((a, b) => Math.abs(a.variants[0].p - c.variants[0].p) - Math.abs(b.variants[0].p - c.variants[0].p)).slice(0, 4);
+  const offers = carOffers(c), offTotal = offers.reduce((t, o) => t + o.v, 0);
+  const emiFrom = emi(r0.total * 0.8, 60), rs = resaleEstimate(c, 3, 12000, S.city);
+  const tiles = [
+    ["offers", "🏷️", "View offers", `Up to ${inr(offTotal)}`],
+    ["emi", "💸", "EMI calculator", `From ${inr(emiFrom)}/mo`],
+    ["variants", "📋", "Variants & prices", `${c.variants.length} variants`],
+    ["resale", "🔒", "Resale value", `${inr(rs.value)} after 3 yrs`],
+    ["specs", "⚙️", "Key specs", `${c.mileage} kmpl · ${c.seats} seats`],
+    ["citywise", "📍", "Price by city", `${Object.keys(CITIES).length} cities`]
+  ];
+  $("#page").innerHTML = `
+  <nav class="mnav" id="mnav"><div class="wrap mnin">${[["overview", "Overview"], ["offers", "Offers"], ["variants", "Variants"], ["specs", "Specs"], ["emi", "EMI"], ["resale", "Resale Lock-In"], ["citywise", "Price by city"], ["similar", "Similar cars"]].map(([k, l]) => `<a href="#${k}" data-act="jump">${l}</a>`).join("")}<button class="link" data-act="nav" data-k="ds" style="margin-left:auto;white-space:nowrap">🎯 Decision Score</button></div></nav>
+  <div class="wrap mpage" id="overview"><div class="crumb"><button data-act="go" data-to="home">Home</button> › <button data-act="filtgo" data-t="brand" data-v="${c.brand}">${c.brand}</button> › ${esc(c.model)}</div>
+  <div class="mtop">
+   <div class="gal"><div class="stage" style="background:${PHOTOS[c.id] ? "radial-gradient(circle at 50% 40%,#fff 0%,#efedf0 75%)" : `radial-gradient(circle at 50% 35%,#fff 0%,${shade(col.h, .82)} 70%)`}">${carVisual(c, 560)}<span class="cname"><i style="display:inline-block;width:11px;height:11px;border-radius:50%;background:${col.h};border:1px solid rgba(0,0,0,.2);margin-right:6px;vertical-align:-1px"></i>${esc(col.n)}</span><span class="pill p-pri" style="position:absolute;top:14px;left:14px">${esc(c.type)}</span></div>
+    <div class="swatches"><b style="font-size:13.5px;margin-right:4px">${c.colors.length} colours</b>${c.colors.map((k, i) => `<button class="swb ${i === ci ? "on" : ""}" style="background:${k.h}" data-act="color" data-i="${i}" title="${esc(k.n)}" aria-label="${esc(k.n)}"></button>`).join("")}</div>
+    <button class="link" data-act="askq" data-q="Is ${esc(col.n)} ${esc(c.model)} available for quick delivery?" style="margin-top:12px;font-size:14px">🚚 Check ${esc(col.n)} stock &amp; delivery with the dealer →</button></div>
+   <div class="info"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div class="brand">${c.brand}</div><button class="pill ${S.shortlist.includes(c.id) ? "p-red" : "p-gr"}" data-act="sl" data-id="${c.id}">${S.shortlist.includes(c.id) ? "♥ Shortlisted" : "♡ Shortlist"}</button></div><h1>${esc(c.model)}</h1>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">${c.ncap ? `<span class="pill p-mint">🛡 ${esc(c.ncap)}</span>` : ""}<span class="pill p-pri">${c.seats} seats</span><span class="pill p-gr">${c.mileage} kmpl</span><span class="pill p-gr">${c.fuel}</span></div>
+    <div class="big">${priceRange(c)} <small>ex-showroom</small></div>
+    <div class="onroad"><div class="row"><span>On-road in <b>${S.city}</b> from</span><b>${inr(r0.total)}</b></div>
+     <div class="row" style="color:var(--mut);font-size:12.5px"><span>Ex-showroom ${inr(r0.ex)} + RTO ${inr(r0.rto)} + insurance ${inr(r0.ins)} + other ${inr(r0.other)}</span></div></div>
+    <a href="#offers" data-act="jump" class="offerbar"><span>🏷️ <b>View ${new Date().toLocaleString("en-IN", { month: "long" })} offers</b><br><small>Save up to ${inr(offTotal)} at dealers in ${S.city}</small></span><span class="go">View offers →</span></a>
+    <div class="tiles">${tiles.map(([k, ic, l, sub]) => `<a href="#${k}" data-act="jump" class="tile"><span class="ic">${ic}</span><span><b>${l}</b><small>${sub}</small></span></a>`).join("")}</div>
+    <div class="alert"><span>🔔 <b>Price-drop &amp; offer alerts</b> for ${esc(c.model)}</span><button class="tg ${S.alerts[c.id] ? "on" : ""}" data-act="alert" aria-label="Toggle alerts"></button></div>
+    <div style="font-size:12.5px;color:var(--mut);margin-top:10px">Dealer for ${S.city}: <b style="color:var(--ink)">${esc(d.name)}</b> · ★ ${d.rating} · replies ${d.reply}</div>
+   </div></div>
+  <div class="blk" id="offers" style="margin-top:22px"><div class="bh"><h3>🏷️ ${esc(c.model)} offers in ${S.city}</h3><span class="pill p-amb">Sample offers · confirm in chat</span></div>
+   <div class="offs">${offers.map(o => `<div class="off"><div class="k">${o.t}</div><div class="v">${inr(o.v)}</div><div class="d">${o.d}</div></div>`).join("")}
+    <div class="off tot"><div class="k">Total benefits</div><div class="v">Up to ${inr(offTotal)}</div><button class="btn sm mint" data-act="askq" data-q="What's the best offer on the ${esc(c.model)} this month?">Claim via dealer chat →</button></div></div>
+   <div style="font-size:12.5px;color:var(--mut);margin-top:10px">Offers vary by variant, colour and stock. Turn on alerts to hear when a dealer posts a new one.</div></div>
+  <div class="blk" id="variants"><div class="bh"><h3>Variants &amp; prices in ${S.city}</h3><button class="btn ghost sm" data-act="sl" data-id="${c.id}">${S.shortlist.includes(c.id) ? "♥ In shortlist" : "♡ Add to compare"}</button></div><table class="vt"><thead><tr><th>Variant</th><th>Ex-showroom</th><th>On-road (${S.city})</th><th></th></tr></thead><tbody>
+   ${c.variants.map(v => `<tr><td><b>${esc(v.n)}</b><small>${esc(v.f)}</small></td><td>${inr(v.p)}</td><td><b>${inr(onRoad(v.p, S.city).total)}</b></td><td style="text-align:right"><button class="btn ghost sm" data-act="askq" data-q="Best price on ${esc(c.model)} ${esc(v.n)}?">Get offer</button></td></tr>`).join("")}</tbody></table></div>
+  <div class="blk" id="specs"><h3>Key specs</h3><div class="specs">
+   ${[["Engine", c.engine], ["Fuel", c.fuel], ["Transmission", c.trans], ["Mileage (claimed)", c.mileage + " kmpl"], ["Seating", c.seats + " seats"], ["Boot space", c.boot + " L"], ["Airbags (base)", c.airbags], ["Safety rating", c.ncap || "Not in our data"], ["Wheelbase (legroom)", "~" + c.wb + " mm"], ["Ground clearance", "~" + c.gc + " mm"]].map(([l, v]) => `<div class="spec"><b>${esc(v)}</b><span>${l}</span></div>`).join("")}</div></div>
+  <div class="blk" id="emi"><h3>EMI calculator</h3><div class="emi"><div class="rng">
+    <label><span>Down payment</span><span id="e-dl"></span></label><input type="range" min="10" max="60" step="5" value="${S.emi.down}" data-act="emi" data-k="down" aria-label="Down payment percent">
+    <label><span>Loan tenure</span><span id="e-tl"></span></label><input type="range" min="12" max="84" step="12" value="${S.emi.months}" data-act="emi" data-k="months" aria-label="Tenure in months">
+    <div style="font-size:12.5px;color:var(--mut);margin-top:10px">On ${esc(c.variants[0].n)} on-road price in ${S.city} · ${INTEREST}% p.a. (indicative)</div></div>
+   <div class="emibox"><div class="d">Your EMI</div><div class="v" id="e-v"></div><div class="d" id="e-d"></div><button class="btn sm" style="background:#fff;color:var(--pri);margin-top:10px" data-act="askq" data-q="What EMI offers does the dealer have on the ${esc(c.model)}?">Get EMI offers from dealer</button></div></div></div>
+  <div class="blk" id="resale"><h3>🔒 Resale Lock-In</h3><div class="resale"><div>
+    <div style="font-size:14px;color:var(--ink2);line-height:1.55;margin-bottom:14px">Worried about what the ${esc(c.model)} will be worth later? See an indicative resale value, then lock a guaranteed buy-back price today. Conditions: within the km limit, full service history, no major accident.</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center"><div><div style="font-size:12px;color:var(--mut);font-weight:700;margin-bottom:5px">SELL AFTER</div><div class="seg">${[3, 4, 5].map(y => `<button class="${S.resale.years === y ? "on" : ""}" data-act="ry" data-v="${y}">${y} years</button>`).join("")}</div></div>
+    <div><div style="font-size:12px;color:var(--mut);font-weight:700;margin-bottom:5px">DRIVING PER YEAR</div><div class="seg">${[8000, 12000, 20000].map(k => `<button class="${S.resale.km === k ? "on" : ""}" data-act="rk" data-v="${k}">${(k / 1000)}k km</button>`).join("")}</div></div></div></div>
+   ${(() => { const r = resaleEstimate(c, S.resale.years, S.resale.km, S.city), locked = S.locks[c.id]; return `<div class="rbox"><div class="k">Estimated resale value after ${S.resale.years} years (${esc(c.variants[0].n)})</div><div class="v">${inr(r.value)}</div><div class="k">${r.retained}% of today's ex-showroom price · indicative</div>
+     <div style="height:1px;background:rgba(255,255,255,.15);margin:12px 0"></div><div class="k">Guaranteed buy-back if you lock today</div><div class="v l">${inr(r.lock)}</div>
+     ${locked ? `<div class="pill p-mint" style="margin-top:10px">✓ Locked: ${inr(locked.lock)} after ${locked.years} years · certificate in your app</div>` : `<button class="btn mint full" style="margin-top:12px" data-act="lock">Lock this price</button>`}</div>`; })()}
+  </div></div>
+  <div class="blk" id="citywise"><h3>${esc(c.model)} on-road price by city</h3><table class="vt"><thead><tr><th>City</th><th>On-road from</th><th>RTO</th><th></th></tr></thead><tbody>
+   ${Object.keys(CITIES).map(ct => { const r = onRoad(c.variants[0].p, ct); return `<tr${ct === S.city ? ' style="background:var(--pri2)"' : ""}><td><b>${ct}</b>${ct === S.city ? " <small style='display:inline;color:var(--pri)'>· your city</small>" : ""}</td><td><b>${inr(r.total)}</b></td><td>${inr(r.rto)}</td><td style="text-align:right">${ct === S.city ? "" : `<button class="btn ghost sm" data-act="setcity" data-v="${ct}">Switch</button>`}</td></tr>`; }).join("")}</tbody></table></div>
+  <div class="blk" style="background:linear-gradient(135deg,var(--pri2),#fff7f2);border-color:#f6cfcf;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><div style="font-size:30px">🎯</div><div style="flex:1;min-width:220px"><h3 style="margin:0 0 4px">Still deciding?</h3><div style="font-size:14px;color:var(--ink2)">Shortlist the ${esc(c.model)} with a few others and get a personalised Decision Score for your family, roads and budget.</div></div><button class="btn" data-act="slds" data-id="${c.id}">Compare &amp; get my score</button></div>
+  <div class="blk" id="similar"><h3>Similar cars you could ask about</h3><div class="grid">${similar.map(x => carCard(x)).join("")}</div></div>
+  </div><div class="sticky"><div class="in"><div class="t"><b>💬 Chat with ${esc(d.name.split(",")[0])}</b><span>Get an instant, personalised price quote for the ${esc(c.model)} · your number stays hidden</span></div><button class="btn ghost" data-act="testdrive">🚗 Book test drive</button><button class="btn" data-act="ask" data-id="${c.id}">💬 Chat with dealer</button></div></div>${footer()}`;
+  updateEmi();
+}
+function updateEmi() {
+  const c = car(S.carId); if (!c || !$("#e-v")) return;
+  const total = onRoad(c.variants[0].p, S.city).total, down = total * S.emi.down / 100, e = emi(total - down, S.emi.months);
+  $("#e-dl").textContent = `${S.emi.down}% · ${inr(down)}`; $("#e-tl").textContent = `${S.emi.months / 12} years`;
+  $("#e-v").textContent = inr(e) + "/mo"; $("#e-d").textContent = `Loan ${inr(total - down)} · total interest ${inr(e * S.emi.months - (total - down))}`;
+}
+
+// ================= Chat drawer =================
+const GEN = "_general";
+function openChat(carId, q) {
+  S.chat = { carId: carId || GEN, mode: "ai" }; S.live.chats++;
+  const key = S.chat.carId, c = car(carId);
+  if (!(S.ai[key] || []).length) aiPush(key, { from: "a", kind: "redirect", id: ++msgId, text: c ? `Hi! Ask me anything about the ${c.name}: on-road price in ${S.city}, EMI, variants, colours, mileage or safety. For stock, delivery or offers, I'll connect you to a verified dealer.` : `Hi! Ask me about any of ${CARS.length} popular cars: prices, EMI, colours, mileage, seating. Name a car to get started.` });
+  renderDrawer(); if (q) ask(q); else setTimeout(() => $("#q") && $("#q").focus(), 50);
+}
+function aiPush(k, m) { (S.ai[k] = S.ai[k] || []).push(m); }
+function renderDrawer() {
+  renderHeader();
+  if (S.notesOpen) {
+    $("#drawer").innerHTML = `<div class="scrim" data-act="closeall"></div><div class="drawer"><div class="dh"><div class="t"><b>Notifications</b><span>Dealer replies and price alerts</span></div><button class="x" data-act="closeall" aria-label="Close">✕</button></div>
+     <div style="padding:6px 18px;overflow:auto">${S.notes.length ? S.notes.slice().reverse().map(n => `<div class="note">${esc(n.text)}<small>${n.when}</small></div>`).join("") : `<div style="color:var(--mut);padding:30px 0;text-align:center">No notifications yet.</div>`}</div></div>`;
+    return;
+  }
+  if (!S.chat) { $("#drawer").innerHTML = ""; return; }
+  const key = S.chat.carId, c = car(key), leadId = c && S.buyerLead[c.id], lead = leadId && S.leads.find(l => l.id === leadId);
+  const inDealer = S.chat.mode === "dealer" && lead, d = c && dealerFor(c, S.city);
+  let log = "";
+  if (!inDealer) {
+    log = `<div class="msg sys">Answers come only from verified price and spec data. Anything that needs a dealer goes to one, with your number hidden.</div>` +
+      (S.ai[key] || []).map(m => m.from === "u" ? `<div class="msg u">${esc(m.text)}</div>` : m.from === "card" ? m.html :
+        `<div class="msg a"><div class="who">CARSAFAR ASSISTANT</div>${esc(m.text)}${m.kind !== "redirect" ? `<div class="fb"><button data-act="fb" data-id="${m.id}" data-v="up" class="${m.fb === "up" ? "on" : ""}" aria-label="Helpful">👍</button><button data-act="fb" data-id="${m.id}" data-v="down" class="${m.fb === "down" ? "on" : ""}" aria-label="Wrong or unhelpful">👎</button></div>` : ""}</div>`).join("") +
+      (S.typing ? `<div class="typing">CarSafar is typing…</div>` : "");
+  } else {
+    const msgs = S.threads[leadId] || [], nLocked = msgs.filter(m => m.locked).length;
+    log = msgs.filter(m => !m.locked).map(m => m.from === "sys" ? `<div class="msg sys">${esc(m.text)}</div>` : m.from === "buyer" ? `<div class="msg u">${esc(m.text)}</div>` : m.from === "card" ? m.html :
+      `<div class="msg d"><div class="who">${esc(d.name.toUpperCase())} · VERIFIED</div>${esc(m.text)}</div>`).join("") + (S.dtyping ? `<div class="typing">${esc(d.name)} is typing…</div>` : "") +
+      (nLocked ? `<div class="locked"><img src="img/carsafar-icon.png" alt="" style="width:40px;height:40px;margin-bottom:4px"><br><b>${esc(d.name)} replied</b><div style="color:var(--mut);margin:4px 0 10px">Your conversation is waiting. Get the CarSafar app to read it, and be notified the moment they respond.</div><button class="btn" data-act="getapp">Get the CarSafar app</button></div>` : "");
+  }
+  const col = c && colorOf(c);
+  const chips = !c ? ["Cars under 8 lakh", "Best 7-seater?", "Creta vs Seltos mileage", "Safest compact SUV?"] :
+    inDealer ? [`Is ${col.n} in stock?`, "Best price this month?", "Book a test drive", "Exchange bonus?"] :
+    ["On-road price", "EMI with ₹2L down", `${col.n} stock & delivery`, "Colours", "Variant difference", "Book test drive"];
+  const banner = lead ? `<div class="modeb"><span>${inDealer ? `💬 <b>${esc(d.name)}</b> · ${lead.shared ? "number shared" : "🔒 number hidden"}` : `💬 Dealer chat open: ${esc(d.name)}`}</span>${inDealer ? `<button data-act="mode" data-m="ai">← Assistant</button>` : `<button data-act="mode" data-m="dealer">Open →</button>`}</div>` : "";
+  const extra = inDealer ? `<div class="extra"><button class="btn ghost sm" data-act="vcall">📞 Call via CarSafar number</button>${lead.shared ? `<span class="pill p-mint">✓ Number shared</span>` : `<button class="btn ghost sm" data-act="share">Share my number</button>`}<button class="btn ghost sm" data-act="spam" style="color:var(--red)">⚑ Report</button></div>` : "";
+  $("#drawer").innerHTML = `<div class="scrim" data-act="closeall"></div><div class="drawer" role="dialog" aria-label="Chat">
+   <div class="dh">${c ? `<div style="width:64px;flex:none">${carVisual(c, 64)}</div>` : `<img src="img/carsafar-icon.png" alt="" style="width:40px;height:40px;flex:none">`}<div class="t"><b>${c ? (inDealer ? "Dealer chat · " : "Ask about ") + esc(c.name) : "Ask CarSafar"}</b><span>${c ? `${esc(col.n)} · ${S.city}` : `${CARS.length} cars · ${S.city}`}</span></div><button class="x" data-act="closeall" aria-label="Close chat">✕</button></div>
+   ${banner}<div class="log" id="log">${log}</div>${extra}
+   <div class="chips">${chips.map(t => `<button class="chip" data-act="chip">${esc(t)}</button>`).join("")}</div>
+   <form class="inp" data-act="send"><input id="q" placeholder="${inDealer ? "Message the dealer…" : "Ask in English or Hinglish…"}" autocomplete="off"><button class="send" aria-label="Send">➤</button></form></div>`;
+  const lg = $("#log"); if (lg) lg.scrollTop = lg.scrollHeight;
+}
+function ask(text) {
+  const key = S.chat.carId, c = car(key);
+  aiPush(key, { from: "u", text }); S.typing = true; renderDrawer();
+  setTimeout(() => {
+    S.typing = false;
+    let r = answer(text, { city: S.city, car: c || null });
+    // General chat: if a car is named, move the conversation to that car
+    if (!c) { const named = findCarsPublic(text)[0]; if (named && (r.kind === "handoff" || r.kind === "testdrive")) { S.chat.carId = named.id; aiPush(named.id, { from: "u", text }); return finishAsk(named.id, r, text); } }
+    finishAsk(key, r, text);
+  }, 520);
+}
+function finishAsk(key, r, text) {
+  const c = car(key);
+  if (r.color && c) { const i = c.colors.findIndex(k => k.n === r.color); if (i >= 0) S.color[c.id] = i; }
+  aiPush(key, { from: "a", text: r.text, kind: r.kind, id: ++msgId });
+  if (r.kind === "answer") S.live.aiResolved++;
+  if (r.kind === "handoff" && c) aiPush(key, { from: "card", html: handoffCard(c) });
+  if (r.kind === "testdrive" && c) aiPush(key, { from: "card", html: testDriveCard(c) });
+  if (r.kind === "answer" && c && /price|on.?road/i.test(text) && !S.alerts[c.id]) aiPush(key, { from: "card", html: `<div class="ccard" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span>🔔 Alert me if the ${esc(c.model)} gets an offer?</span><button class="btn sm" data-act="alert">Alert me</button></div>` });
+  renderDrawer(); if (S.route === "model") renderPage();
+}
+function findCarsPublic(t) { return CARS.filter(c => c.aliases.some(a => new RegExp("(^|[^a-z0-9])" + a + "([^a-z0-9]|$)").test(t.toLowerCase()))); }
+function handoffCard(c) {
+  const d = dealerFor(c, S.city), ci = S.color[c.id] ?? 0;
+  if (S.buyerLead[c.id]) return `<div class="ccard">You already have a dealer chat open for the ${esc(c.model)}. <button class="btn sm" data-act="mode" data-m="dealer" style="margin-top:8px">Continue with ${esc(d.name)}</button></div>`;
+  return `<div class="ccard"><h5>Ask a verified dealer</h5>
+   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"><span class="pill p-mint">✓ Verified</span><span class="pill p-gr">★ ${d.rating}</span><span class="pill p-blue">Replies ${d.reply}</span><span class="pill p-pri">🔒 Number hidden</span></div>
+   <div style="font-weight:700">${esc(d.name)}</div><div style="font-size:12.5px;color:var(--mut);margin:3px 0 8px">Add these once, so the dealer answers precisely instead of calling you:</div>
+   <div class="frow"><label class="f">Variant<select id="h-var">${c.variants.map(v => `<option>${esc(v.n)}</option>`).join("")}</select></label><label class="f">Colour<select id="h-col">${c.colors.map((k, i) => `<option ${i === ci ? "selected" : ""}>${esc(k.n)}</option>`).join("")}</select></label></div>
+   <div class="frow" style="margin-top:8px"><label class="f">Budget<select id="h-bud">${["Under ₹8 lakh", "₹8–10 lakh", "₹10–13 lakh", "₹13–16 lakh", "₹16–20 lakh", "₹20 lakh+"].map((b, i) => `<option ${i === 2 ? "selected" : ""}>${b}</option>`).join("")}</select></label><label class="f">Buying<select id="h-time"><option>This month</option><option selected>1–3 months</option><option>Just exploring</option></select></label></div>
+   <button class="btn full" style="margin-top:10px" data-act="handoff">Send to dealer</button></div>`;
+}
+function testDriveCard(c) {
+  const days = [1, 2, 3].map(i => new Date(Date.now() + i * 864e5).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }));
+  return `<div class="ccard"><h5>🚗 Book a test drive: ${esc(c.model)}</h5><div style="font-size:12.5px;color:var(--mut)">At ${esc(dealerFor(c, S.city).name)} or at your home. The dealer confirms in chat.</div>
+   <div class="slots" data-g="where"><button class="slot on" data-act="slot">🏢 At showroom</button><button class="slot" data-act="slot">🏠 At my home</button></div>
+   <div class="slots" data-g="day">${days.map((d, i) => `<button class="slot ${i === 0 ? "on" : ""}" data-act="slot">${d}</button>`).join("")}</div>
+   <div class="slots" data-g="time">${["10:00 AM", "12:30 PM", "4:00 PM", "6:30 PM"].map((s, i) => `<button class="slot ${i === 1 ? "on" : ""}" data-act="slot">${s}</button>`).join("")}</div>
+   <button class="btn full" data-act="book">Request slot</button></div>`;
+}
+function createLead(c, variant, colour, budget, timeline) {
+  const id = "L" + (200 + S.leads.length);
+  const caps = [8, 10, 13, 16, 20, 99][["Under ₹8 lakh", "₹8–10 lakh", "₹10–13 lakh", "₹13–16 lakh", "₹16–20 lakh", "₹20 lakh+"].indexOf(budget)] * 100000;
+  const vp = c.variants.find(v => v.n === variant).p;
+  const l = { id, buyer: "You · Buyer #" + (5000 + S.leads.length), carId: c.id, variant, colour, city: S.city, budget, timeline, budgetOk: caps >= vp, ts: Date.now(), status: "New", mine: true };
+  l.tag = leadTag(l); S.leads.unshift(l);
+  const recent = (S.ai[c.id] || []).filter(m => m.from === "u").slice(-1)[0];
+  S.threads[id] = [{ from: "sys", text: `Shared with dealer: ${c.name} ${variant} · ${colour} · ${S.city} · ${budget} · ${timeline}. Your number is hidden.` }];
+  if (recent) S.threads[id].push({ from: "buyer", text: recent.text });
+  S.buyerLead[c.id] = id; S.live.handoffs++;
+  return l;
+}
+function notify(text) { S.notes.push({ text, when: new Date().toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" }) }); S.unread++; renderHeader(); if (S.view === "buyer") toast("🔔 " + text); }
+function dealerAutoReply(leadId) {
+  const l = S.leads.find(x => x.id === leadId), c = car(l.carId), d = dealerFor(c, l.city);
+  if (S.afterHours) { S.threads[leadId].push({ from: "dealer", text: "Thanks for your message! Our showroom is closed now (open 9 AM–8 PM). We'll reply first thing tomorrow, and you'll get a notification." }, { from: "sys", text: "Auto-reply · outside dealer hours" }); notify(`🌙 ${d.name} will reply in the morning`); renderDrawer(); return; }
+  S.dtyping = true; renderDrawer();
+  setTimeout(() => {
+    S.dtyping = false;
+    const last = (S.threads[leadId].filter(m => m.from === "buyer").slice(-1)[0] || {}).text || "";
+    let t;
+    if (/test.?drive/i.test(last)) t = "Happy to set that up! Use the booking card and I'll confirm the slot here.";
+    else if (/exchange/i.test(last)) t = `We do a free evaluation of your current car. Exchange bonus on the ${c.model} this month is up to ₹30,000 depending on condition.`;
+    else if (/stock|deliver|availab|quick|colou?r|white|black|red|grey|blue/i.test(last)) t = `Good news: the ${c.model} ${l.variant} in ${l.colour} is in stock at our ${l.city} yard. Delivery in 5–7 days after booking. Shall I block one for you?`;
+    else t = `Hi! For the ${c.model} ${l.variant} in ${l.city}, we have a ₹25,000 cash discount + ₹10,000 corporate offer this month. Shall I send the full price breakup?`;
+    S.threads[leadId].push({ from: "dealer", text: t, locked: !S.inApp }); l.status = "Replied"; S.live.dealerReplies++;
+    if (S.inApp) notify(`💬 ${d.name} replied about the ${c.model}`); renderDrawer();
+  }, 1700);
+}
+
+// ================= Dealer view =================
+function partnerBar(active) { return `<div style="background:var(--ink);color:#fff"><div class="wrap" style="display:flex;align-items:center;gap:16px;padding:12px 20px;flex-wrap:wrap"><span class="logo" style="font-size:18px"><img src="img/carsafar-icon.png" alt="" style="width:30px;height:30px"><span>CarSafar <span style="font-weight:600;color:#c4c8d8;font-size:14px">for dealers</span></span></span>
+  <div style="display:flex;gap:6px"><button data-act="view" data-v="dealer" style="padding:7px 12px;border-radius:9px;font-weight:700;font-size:13.5px;${active === "dealer" ? "background:#fff;color:var(--ink)" : "color:#c4c8d8"}">Lead inbox</button><button data-act="view" data-v="metrics" style="padding:7px 12px;border-radius:9px;font-weight:700;font-size:13.5px;${active === "metrics" ? "background:#fff;color:var(--ink)" : "color:#c4c8d8"}">Pilot metrics</button></div>
+  <button data-act="view" data-v="buyer" style="margin-left:auto;font-weight:700;font-size:13.5px;color:#ffc2bd">← Back to CarSafar</button></div></div>`; }
+
+function seedLeads() {
+  [{ buyer: "Buyer #4821", carId: "creta", variant: "SX", colour: "Atlas White", budget: "₹16–20 lakh", timeline: "This month", budgetOk: true, mins: 6, last: "Is the SX available in white? Need delivery before Diwali." },
+   { buyer: "Buyer #4790", carId: "nexon", variant: "Creative", colour: "Daytona Grey", budget: "₹10–13 lakh", timeline: "1–3 months", budgetOk: true, mins: 24, last: "What exchange bonus can I get on a 2017 Swift?", replied: "We're running up to ₹40,000 exchange bonus this month depending on condition. Want a free evaluation?" },
+   { buyer: "Buyer #4756", carId: "punch", variant: "Adventure", colour: "Tornado Blue", budget: "Under ₹8 lakh", timeline: "This month", budgetOk: true, mins: 52, last: "Can I test drive on Saturday morning?" },
+   { buyer: "Buyer #4702", carId: "ertiga", variant: "VXi", colour: "Pearl White", budget: "₹10–13 lakh", timeline: "Just exploring", budgetOk: true, mins: 130, last: "Is CNG available in the VXi?", rerouted: true }
+  ].forEach((l, i) => {
+    const id = "L" + (100 + i);
+    S.leads.push({ id, ...l, city: "Delhi", status: l.replied ? "Replied" : "New", tag: leadTag(l), ts: Date.now() - l.mins * 60000 });
+    S.threads[id] = [{ from: "sys", text: `Lead from CarSafar chat · ${car(l.carId).name} ${l.variant} · ${l.colour} · Delhi · ${l.budget} · ${l.timeline} · number hidden` }, { from: "buyer", text: l.last }];
+    if (l.replied) S.threads[id].push({ from: "dealer", text: l.replied });
+  });
+}
+function renderDealer() {
+  const order = { Hot: 0, Warm: 1, Cold: 2 };
+  const leads = S.leads.slice().sort((a, b) => order[a.tag] - order[b.tag] || b.ts - a.ts);
+  if (!S.activeLead || !S.leads.find(l => l.id === S.activeLead)) S.activeLead = leads[0].id;
+  const l = S.leads.find(x => x.id === S.activeLead), c = car(l.carId), d = dealerFor(c, l.city);
+  const tc = t => t === "Hot" ? "p-red" : t === "Warm" ? "p-amb" : "p-gr";
+  const th = (S.threads[l.id] || []).filter(m => m.from !== "card");
+  $("#page").innerHTML = partnerBar("dealer") + `<div class="wrap"><div class="dgrid">
+   <div class="panel"><div class="ph"><h3>Leads from CarSafar chat</h3><span class="pill p-gr">Demo: all brands</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-size:12.5px"><span>Simulate after-hours auto-reply</span><button class="tg ${S.afterHours ? "on" : ""}" data-act="ah" aria-label="Toggle after hours"></button></div>
+    ${leads.map(x => `<button class="lead ${x.id === l.id ? "on" : ""}" data-act="pick" data-id="${x.id}"><div class="t"><span>${esc(x.buyer)}</span><span class="pill ${tc(x.tag)}">${x.tag}</span></div>
+     <div class="s">${esc(car(x.carId).name)} ${esc(x.variant)} · ${esc(x.colour)}</div><div class="s">${esc(x.budget)} · ${esc(x.timeline)} · ${esc(x.status)} · ${minsAgo(Math.round((Date.now() - x.ts) / 60000))}</div>
+     <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><span class="pill p-gr">Billed ₹450</span>${slaPill(x)}</div></button>`).join("")}</div>
+   <div class="panel thread"><div class="ph"><h3>${esc(l.buyer)} <span class="pill ${tc(l.tag)}" style="margin-left:6px">${l.tag}</span></h3><span class="pill ${l.shared ? "p-mint" : "p-pri"}">${l.shared ? "📞 Number shared" : "🔒 Number hidden"}</span></div>
+    <div class="ctx" style="margin:10px 14px 0"><b>Lead context from CarSafar chat</b> · routed to ${esc(d.name)} · <b>billed ₹450</b> when the buyer sent the first message<br>${esc(c.name)} ${esc(l.variant)} · ${esc(l.colour)} · ${esc(l.city)} · Budget ${esc(l.budget)} · Buying: ${esc(l.timeline)}${l.td ? `<br>📅 Test drive ${esc(l.td.day)}, ${esc(l.td.time)} · ${l.td.confirmed ? "<b style='color:var(--mint)'>Confirmed</b>" : "<b style='color:#9a6400'>Awaiting confirmation</b>"}` : ""}</div>
+    <div class="log" id="dlog" style="background:#fff">${th.map(m => m.from === "sys" ? `<div class="msg sys">${esc(m.text)}</div>` : m.from === "dealer" ? `<div class="msg u">${esc(m.text)}</div>` : `<div class="msg a"><div class="who">BUYER</div>${esc(m.text)}</div>`).join("")}</div>
+    <div class="qr">${["Let's continue on WhatsApp: 98765 43210", `Yes, ${l.colour} is in stock. Delivery in 5–7 days.`, "Sharing the full on-road breakup now.", "Would you like a home test drive?", "We have a ₹25,000 discount this month."].map(t => `<button class="chip" data-act="qr">${esc(t)}</button>`).join("")}${l.td && !l.td.confirmed ? `<button class="chip" data-act="confirm" style="border-color:var(--mint);color:#0a8a73">✓ Confirm test drive</button>` : ""}</div>
+    <form class="inp" data-act="dsend"><input id="dq" placeholder="Reply to ${esc(l.buyer)}…" autocomplete="off"><button class="send" aria-label="Send">➤</button></form>
+    <details style="padding:0 14px 14px"><summary style="font-size:13px;font-weight:700;cursor:pointer;padding:6px 0">📢 Post an offer (alerts every subscribed buyer)</summary>
+     <div class="frow" style="margin-top:8px;align-items:end"><label class="f">Model<select id="o-car">${CARS.map(x => `<option value="${x.id}" ${x.id === c.id ? "selected" : ""}>${esc(x.name)}</option>`).join("")}</select></label><label class="f">Cash discount (₹)<input id="o-amt" type="number" value="25000" min="1000" step="1000" style="border:1.5px solid var(--line);border-radius:10px;padding:8px"></label><button class="btn sm" data-act="offer">Post offer</button></div></details>
+   </div></div></div>`;
+  const dl = $("#dlog"); if (dl) dl.scrollTop = dl.scrollHeight;
+}
+function slaPill(x) {
+  if (x.rerouted) return `<span class="pill p-amb">↪ SLA missed · rerouted to backup dealer</span>`;
+  if (x.status !== "New") return `<span class="pill p-mint">✓ Replied within SLA</span>`;
+  const left = 15 - Math.round((Date.now() - x.ts) / 60000);
+  return left > 0 ? `<span class="pill p-blue">⏱ Reply due in ${left} min</span>` : `<span class="pill p-red">⏱ SLA missed</span>`;
+}
+function dealerSend(t) {
+  const l = S.leads.find(x => x.id === S.activeLead);
+  const m = maskContact(t); t = m.text;
+  S.threads[l.id].push({ from: "dealer", text: t, locked: l.mine && !S.inApp }); l.status = "Replied"; S.live.dealerReplies++;
+  if (m.flagged) { S.live.masked++; S.threads[l.id].push({ from: "sys", text: "Contact details were hidden. Calls go through the CarSafar virtual number, so both sides stay protected." }); }
+  if (l.mine) notify(`💬 ${dealerFor(car(l.carId), l.city).name} replied about the ${car(l.carId).model}`);
+  renderDealer();
+}
+
+// ================= Metrics view =================
+function renderMetrics() {
+  const L = S.live;
+  const F = [["Model page views", 120000 + L.views], ["Chats started", 4800 + L.chats], ["Handed to dealer", 1824 + L.handoffs], ["Dealer replied <15 min", 1313 + L.dealerReplies], ["Test drives booked", 410 + L.testDrives]];
+  const weeks = [212, 238, 261, 289 + L.handoffs], wmax = Math.max(...weeks);
+  $("#page").innerHTML = partnerBar("metrics") + `<div class="wrap" style="padding:24px 20px">
+   <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap"><h2 style="margin:0;font-size:22px;letter-spacing:-.5px">Pilot dashboard · last 30 days</h2><span style="font-size:12.5px;color:var(--mut)">Seeded sample data + live events from this session</span></div>
+   <div class="kpis">
+    <div class="kpi ns"><div class="l">★ NORTH STAR · qualified dealer conversations / week</div><div class="v">${weeks[3]}</div><div class="c" style="color:#7ee2c8">▲ ${Math.round((weeks[3] / weeks[2] - 1) * 100)}% WoW</div></div>
+    <div class="kpi"><div class="l">Chat → test drive</div><div class="v">${(F[4][1] / F[1][1] * 100).toFixed(1)}%</div><div class="c" style="color:#0a8a73">Target 8–10%</div></div>
+    <div class="kpi" style="display:none"></div><div class="kpi"><div class="l">Answered fully by AI</div><div class="v">${((2976 + L.aiResolved) / F[1][1] * 100).toFixed(0)}%</div><div class="c" style="color:#0a8a73">Target 60%+</div></div>
+    <div class="kpi"><div class="l">D30 retention · chat users vs others</div><div class="v">34% <span style="font-size:15px;color:var(--mut);font-weight:600">vs 19%</span></div><div class="c" style="color:#0a8a73">+15 pts</div></div></div>
+   <div class="mgrid"><div class="box"><h3>Conversion funnel</h3><div class="sub">62% of chats are fully answered by AI; the rest go to a dealer. The biggest drop is page view → chat start.</div>
+     <div class="fun">${F.map((f, i) => `<div class="fr"><span>${f[0]}</span><div class="fbar"><div style="width:${Math.max(f[1] / F[0][1] * 100, 4)}%">${f[1].toLocaleString("en-IN")}</div></div><span class="conv">${i ? (f[1] / F[i - 1][1] * 100).toFixed(0) + "%" : ""}</span></div>`).join("")}</div>
+     <h3 style="margin-top:22px">Qualified conversations per week</h3><div class="sub">North Star trend since pilot launch</div>
+     <svg viewBox="0 0 400 140" width="100%" role="img" aria-label="Weekly qualified conversations">${weeks.map((w, i) => { const h = w / wmax * 100, x = 30 + i * 95; return `<rect x="${x}" y="${115 - h}" width="56" height="${h}" rx="7" fill="${i === 3 ? "#d9161d" : "#f7c1bd"}"/><text x="${x + 28}" y="${108 - h}" text-anchor="middle" font-size="12" font-weight="700" fill="#0e1530">${w}</text><text x="${x + 28}" y="133" text-anchor="middle" font-size="11" fill="#6c6c86">Week ${i + 1}</text>`; }).join("")}</svg></div>
+    <div style="display:grid;gap:16px;align-content:start">
+     <div class="box"><h3>Guardrails</h3><div class="sub">Must not get worse while the North Star grows</div>
+      <div class="gr"><span>Spam / unwanted-call reports</span><span class="pill p-mint">${(0.6 + L.spam * 0.1).toFixed(1)}% · limit 1%</span></div>
+      <div class="gr"><span>AI wrong-answer flags (👎)</span><span class="pill ${L.thumbsDown > 3 ? "p-amb" : "p-mint"}">${(1.1 + L.thumbsDown * 0.1).toFixed(1)}% · limit 2%</span></div>
+      <div class="gr"><span>Avg dealer first response</span><span class="pill p-mint">9.4 min · SLA 15</span></div>
+      <div class="gr"><span>Notification opt-out</span><span class="pill p-mint">2.1% · limit 3%</span></div>
+      <div class="gr"><span>Contact details masked in chat</span><span class="pill p-blue">${41 + L.masked} this month</span></div>
+      <div class="gr"><span>Invented prices (eval set)</span><span class="pill p-mint">0 / 34</span></div></div>
+     <div class="box"><h3>This session (live)</h3><div class="sub">Use the buyer app and the dealer inbox; these update</div>
+      <div class="live"><div><b>${S.shortlist.length}</b><span>Shortlisted</span></div><div><b>${L.chats}</b><span>Chats</span></div><div><b>${L.handoffs}</b><span>Handoffs</span></div><div><b>${L.testDrives}</b><span>Test drives</span></div><div><b>${L.dealerReplies}</b><span>Dealer replies</span></div><div><b>${L.alerts}</b><span>Alerts on</span></div><div><b>${L.thumbsDown}</b><span>👎 flags</span></div></div></div>
+     <div class="box"><h3>Business</h3><div class="gr"><span>Leads billed (₹450 each)</span><b>${inr((1824 + L.handoffs) * 450)}</b></div><div class="gr"><span>Decision Scores completed this month</span><b>${(1940 + (S.dsAns ? 1 : 0)).toLocaleString("en-IN")}</b></div><div class="gr"><span>Resale lock-ins this month</span><b>${86 + Object.keys(S.locks).length}</b></div></div></div></div></div>`;
+}
+
+
+// ================= Shortlist + Decision Score =================
+const DS_Q = [
+  { k: "family", q: "How many people will usually travel?", opts: [[4, "Up to 4", "Couple or small family"], [5, "5 people", "Family of five"], [7, "6–7 people", "Joint family, parents travel too"]] },
+  { k: "use", q: "Where will you drive most?", opts: [["rough", "Narrow, crowded or bumpy roads", "Old-city lanes, potholes, speed breakers (e.g. Varanasi)"], ["city", "Smooth city roads", "Traffic, parking, daily commute"], ["highway", "Mostly highway", "Long trips, hometown drives"], ["mixed", "A bit of everything", ""]] },
+  { k: "budget", q: "What's your on-road budget?", opts: [[800000, "Up to ₹8 lakh", ""], [1100000, "Up to ₹11 lakh", ""], [1500000, "Up to ₹15 lakh", ""], [2000000, "Up to ₹20 lakh", ""], [2600000, "Up to ₹26 lakh", ""]], flex: true },
+  { k: "fuel", q: "Any fuel preference?", opts: [["Any", "No preference", ""], ["Petrol", "Petrol", ""], ["Diesel", "Diesel", ""], ["CNG", "CNG", "Lowest running cost"], ["Hybrid", "Hybrid", "Best mileage"]] },
+  { k: "ranks", q: "Rank what matters most to you", rank: true }
+];
+const RANK_OPTS = [["legroom", "🦵 Rear legroom"], ["safety", "🛡 Safety rating"], ["boot", "🧳 Boot space"], ["resale", "💰 Resale value"], ["maint", "🔧 Low maintenance"], ["tech", "📱 Tech features"]];
+function renderShortlist() {
+  const list = S.shortlist.map(car);
+  const rows = [["Ex-showroom from", c => lakh(c.variants[0].p)], [`On-road in ${S.city}`, c => inr(onRoad(c.variants[0].p, S.city).total)], ["Mileage", c => c.mileage + " kmpl"], ["Seats", c => c.seats], ["Boot space", c => c.boot + " L"], ["Wheelbase (legroom)", c => "~" + c.wb + " mm"], ["Ground clearance", c => "~" + c.gc + " mm"], ["Safety rating", c => c.ncap || "Not in our data"], ["Fuel", c => c.fuel], [`Resale after 3 yrs`, c => inr(resaleEstimate(c, 3, 12000, S.city).value)]];
+  const scored = S.dsAns && list.length >= 2 ? list.map(c => ({ c, r: decisionScore(c, S.dsAns, S.city) })).sort((a, b) => b.r.score - a.r.score) : null;
+  $("#page").innerHTML = `<div class="wrap"><div class="crumb"><button data-act="go" data-to="home">Home</button> › Shortlist</div>
+   <div class="sh"><div><h2>Your shortlist</h2><p>${list.length} car${list.length === 1 ? "" : "s"} · add or remove with ♡ anywhere in the app</p></div><button class="link" data-act="nav" data-k="cars">+ Add cars</button></div>
+   ${list.length < 2 ? `<div class="empty">Shortlist at least 2 cars to compare them and get your Decision Score. <button class="link" data-act="nav" data-k="cars">Browse cars →</button></div>` : `
+   ${scored ? `<div class="blk"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px"><div><h3 style="margin:0">🎯 Your Decision Score</h3><div style="font-size:13px;color:var(--mut)">${S.dsAns.family >= 6 ? "6–7 people" : S.dsAns.family + " people"} · ${({ rough: "narrow, bumpy roads", city: "smooth city roads", highway: "highway", mixed: "mixed" })[S.dsAns.use]} · on-road up to ${lakh(S.dsAns.budget)}${S.dsAns.flex ? ` (+${S.dsAns.flex * 100}% flexible)` : ""} · ${S.dsAns.fuel === "Any" ? "any fuel" : S.dsAns.fuel} · priorities: ${S.dsAns.ranks.slice(0, 3).map(k => ({ legroom: "legroom", safety: "safety", resale: "resale", boot: "boot space", maint: "low maintenance", tech: "tech" })[k]).join(" > ")}</div></div><button class="btn ghost sm" data-act="dsstart">Edit answers</button></div>
+     ${scored.map(({ c, r }, i) => `<div class="dsr ${i === 0 ? "top" : ""}"><div class="ring" style="--v:${r.score};--c:${r.score >= 80 ? "var(--mint)" : r.score >= 60 ? "var(--pri)" : "var(--amber)"}"><span>${r.score}</span></div>
+      <div style="flex:1;min-width:0"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="font-size:16.5px">${esc(c.name)}</b>${i === 0 ? `<span class="pill p-mint">Best match for you</span>` : ""}</div>
+      <div class="why">${esc(r.why)}</div>
+      <div class="bars"><div>Your priorities ${r.parts.fit}<i><i style="width:${r.parts.fit}%"></i></i></div><div>Driving use ${r.parts.use}<i><i style="width:${r.parts.use}%"></i></i></div><div>Budget fit ${r.parts.budget}<i><i style="width:${r.parts.budget}%"></i></i></div></div></div>
+      <div style="display:grid;gap:6px"><button class="btn sm" data-act="ask" data-id="${c.id}">💬 Ask dealer</button><button class="btn ghost sm" data-act="open" data-id="${c.id}">View</button></div></div>`).join("")}
+     <div style="font-size:12px;color:var(--mut)">How it's calculated: 60% your ranked priorities, 25% fit for your driving, 15% budget fit; seat and fuel mismatches are penalised. Legroom uses wheelbase and rough-road fit uses ground clearance (approximate figures); resale and maintenance use brand-level indices. All indicative. The score updates when you change your shortlist.</div></div>`
+   : `<div class="blk" style="background:linear-gradient(135deg,var(--pri2),#fff7f2);border-color:#f6cfcf;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><div style="font-size:34px">🎯</div><div style="flex:1;min-width:220px"><h3 style="margin:0 0 4px">Not sure which one is right for you?</h3><div style="font-size:14px;color:var(--ink2)">Answer 5 quick questions and get a personalised Decision Score out of 100 for each car, with a plain-language reason.${S.inApp ? "" : ""}</div></div><button class="btn" data-act="dsstart">Get my Decision Score</button></div>`}
+   <div class="blk" style="overflow-x:auto;padding:0"><table class="cmp"><thead><tr><th></th>${list.map(c => `<td style="min-width:170px"><div style="max-width:150px">${carVisual(c, 150)}</div><b>${esc(c.name)}</b><div><button class="link" data-act="sl" data-id="${c.id}" style="font-size:12.5px">Remove</button></div></td>`).join("")}</tr></thead>
+    <tbody>${rows.map(([l, f]) => `<tr><th>${l}</th>${list.map(c => `<td>${esc(f(c))}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`}
+  </div>${footer()}`;
+}
+function renderModal() {
+  const m = S.modal, el = $("#modalc");
+  if (!m) { el.innerHTML = ""; return; }
+  let body = "";
+  if (m.type === "app") {
+    body = `<div style="text-align:center"><img src="img/carsafar-icon.png" alt="" style="width:64px;height:64px;margin-bottom:8px"><h3>${esc(m.title || "Continue in the CarSafar app")}</h3><div class="s">${esc(m.sub || "Get dealer replies, price-drop alerts and your Decision Score in one place, with notifications.")}</div>
+     <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn" data-act="install">Install the app (simulated)</button><button class="btn ghost" data-act="closemodal">Not now</button></div>
+     <div style="font-size:11.5px;color:var(--mut);margin-top:12px">Prototype: tapping install simulates the web → app switch, which is the funnel step this feature is built to grow.</div></div>`;
+  } else if (m.type === "ds") {
+    const d = S.dsDraft, st = m.step, Q = DS_Q[st];
+    body = `<div class="steps">${DS_Q.map((_, i) => `<i class="${i <= st ? "on" : ""}"></i>`).join("")}</div><div style="font-size:12px;font-weight:800;color:var(--pri);letter-spacing:.4px">QUESTION ${st + 1} OF 5</div><h3>${Q.q}</h3>
+     <div class="s">${Q.rank ? "Tap at least your top 3, in order. Your first pick carries the most weight." : "Pick one."}</div>
+     ${Q.rank ? RANK_OPTS.map(([k, l]) => { const i = d.ranks.indexOf(k); return `<button class="opt ${i >= 0 ? "on" : ""}" data-act="dsrank" data-k="${k}"><span class="rank">${i >= 0 ? `<b>${i + 1}</b>` : `<b style="background:var(--line);color:var(--mut)">–</b>`}${l}</span></button>`; }).join("") + (d.ranks.length ? `<button class="link" data-act="dsreset" style="font-size:13px">Reset order</button>` : "")
+       : Q.opts.map(([v, l, sub]) => `<button class="opt ${d[Q.k] === v ? "on" : ""}" data-act="dspick" data-k="${Q.k}" data-v="${v}">${l}${sub ? `<small>${sub}</small>` : ""}</button>`).join("")}
+     ${Q.flex ? `<div style="margin-top:8px;font-size:13px;font-weight:700">How flexible is it?</div><div class="seg" style="margin-top:6px">${[[0, "Strict"], [0.1, "Up to 10% more"], [0.2, "Up to 20% more"]].map(([v, l]) => `<button class="${d.flex === v ? "on" : ""}" data-act="dsflex" data-v="${v}">${l}</button>`).join("")}</div>` : ""}
+     <div class="mfoot"><button class="btn ghost" data-act="${st ? "dsback" : "closemodal"}">${st ? "← Back" : "Cancel"}</button>${st < 4 ? `<button class="btn" data-act="dsnext" ${d[Q.k] == null ? "disabled style='opacity:.5'" : ""}>Next →</button>` : `<button class="btn" data-act="dsdone" ${d.ranks.length < 3 ? "disabled style='opacity:.5'" : ""}>See my Decision Score</button>`}</div>`;
+  } else if (m.type === "lock") {
+    const c = car(m.carId), r = m.r;
+    body = `<div style="text-align:center"><div style="font-size:42px">🔒</div><h3>Buy-back price locked</h3><div class="s">${esc(c.name)} (${esc(c.variants[0].n)}) · sell back after ${m.years} years at up to ${(m.km / 1000)}k km a year</div>
+     <div class="rbox" style="text-align:left"><div class="k">Guaranteed buy-back</div><div class="v l">${inr(r.lock)}</div><div class="k">Conditions: km limit, full service history, no major accident. Certificate saved in your app; valid if you buy within 60 days.</div></div>
+     <button class="btn" style="margin-top:14px" data-act="closemodal">Done</button></div>`;
+  }
+  el.innerHTML = `<div class="mback" data-act="mbg"><div class="modal" role="dialog" aria-modal="true">${body}</div></div>`;
+}
+function requireApp(title, sub, then) { if (then) then(); }   // no download gate: CarSafar is the app
+function doInstall() {
+  S.inApp = true; S.live.installs++;
+  Object.values(S.threads).forEach(t => t.forEach(m => { if (m.locked) m.locked = false; }));
+  S.modal = null; renderModal(); renderHeader(); toast("📱 CarSafar app installed. Your chats, alerts and shortlist came with you");
+  const f = S.pendingAfterInstall; S.pendingAfterInstall = null;
+  if (f) f(); else { if (S.chat) renderDrawer(); }
+}
+let bannerTimer = null;
+function scheduleBanner(c) {
+  clearTimeout(bannerTimer); const old = $("#cbanner"); if (old) old.remove();
+  if (S.bannerDismissed[c.id] || S.buyerLead[c.id]) return;
+  bannerTimer = setTimeout(() => {
+    if (S.route !== "model" || S.carId !== c.id || S.chat || S.modal || S.view !== "buyer") return;
+    const d = dealerFor(c, S.city), b = document.createElement("div"); b.id = "cbanner"; b.className = "cbanner";
+    b.innerHTML = `<span style="font-size:22px">💬</span><div class="t">Chat with <b>${esc(d.name.split(",")[0])}</b>. Get an instant, personalised price quote for the ${esc(c.model)}.</div><button class="btn sm" data-act="ask" data-id="${c.id}">Chat now</button><button class="x" data-act="bannerx" aria-label="Dismiss" style="color:#fff">✕</button>`;
+    document.body.appendChild(b);
+  }, 6000);
+}
+
+// ================= Events =================
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-act]"); if (!el) return;
+  const a = el.dataset.act, c = S.chat && car(S.chat.carId);
+  switch (a) {
+    case "go": S.view = "buyer"; go(el.dataset.to); break;
+    case "nav": { S.view = "buyer"; const k = el.dataset.k; S.filters = { budget: null, body: null, brand: null, fuel: null, sort: S.filters.sort };
+      if (k === "home") return go("home"); if (k === "shortlist") return go("shortlist"); if (k === "ds") { go("shortlist"); if (S.shortlist.length >= 2 && !S.dsAns) setTimeout(() => document.querySelector('[data-act="dsstart"]').click(), 50); return; } if (k === "cars-suv") S.filters.body = "SUV"; if (k === "cars-hatch") S.filters.body = "Hatchback"; if (k === "cars-under8") { S.filters.budget = null; S.filters.sort = "low"; S.filters.budget = 0; S.filters._under8 = true; }
+      if (k === "cars-under8") { S.filters.budget = null; S.filters.maxp = 800000; } go("cars"); break; }
+    case "ftab": S.finderTab = el.dataset.k; renderPage(); break;
+    case "htab": S.homeTab = el.dataset.k; renderPage(); break;
+    case "fpick": case "filtgo": { S.filters = { budget: null, body: null, brand: null, fuel: null, sort: "pop" }; const t = el.dataset.t, v = el.dataset.v; S.filters[t] = t === "budget" ? +v : v; S.view = "buyer"; go("cars"); break; }
+    case "filt": { e.preventDefault(); const t = el.dataset.t, v = t === "budget" ? +el.dataset.v : el.dataset.v; S.filters[t] = S.filters[t] === v ? null : v; delete S.filters.maxp; renderPage(); break; }
+    case "clear": S.filters = { budget: null, body: null, brand: null, fuel: null, sort: "pop" }; renderPage(); break;
+    case "open": go("model", el.dataset.id); if (el.dataset.jump) setTimeout(() => document.getElementById(el.dataset.jump).scrollIntoView({ behavior: "smooth" }), 80); break;
+    case "color": S.color[S.carId] = +el.dataset.i; { const y = scrollY; renderPage(); scrollTo(0, y); } break;
+    case "jump": e.preventDefault(); document.querySelector(el.getAttribute("href")).scrollIntoView({ behavior: "smooth" }); break;
+    case "ask": { const bn = $("#cbanner"); if (bn) bn.remove(); openChat(el.dataset.id); break; }
+    case "askq": openChat(S.carId, el.dataset.q); break;
+    case "alert": { const id = S.route === "model" && !S.chat ? S.carId : (c ? c.id : S.carId); S.alerts[id] = !S.alerts[id]; if (S.alerts[id]) { S.live.alerts++; toast(`🔔 You'll be notified of price drops and offers on the ${car(id).model}`); } if (S.chat) renderDrawer(); if (S.route === "model") { const y = scrollY; renderPage(); scrollTo(0, y); } break; }
+    case "notes": S.notesOpen = true; S.unread = 0; renderDrawer(); break;
+    case "closeall": S.chat = null; S.notesOpen = false; renderDrawer(); break;
+    case "chip": { const t = el.textContent; if (!c) return sendBuyer(t);
+      if (t === "Book test drive" && S.chat.mode !== "dealer") { aiPush(c.id, { from: "u", text: t }); aiPush(c.id, { from: "card", html: testDriveCard(c) }); return renderDrawer(); }
+      const map = { "On-road price": `${c.model} on-road price in ${S.city}`, "EMI with ₹2L down": `EMI for ${c.model} with 2L down, 5 years`, "Colours": `Which colours does the ${c.model} come in?`, "Variant difference": `${c.model} variant difference` };
+      sendBuyer(map[t] || (t.endsWith("stock & delivery") ? `Is ${colorOf(c).n} ${c.model} available for quick delivery?` : t)); break; }
+    case "handoff": { const l = createLead(c, $("#h-var").value, $("#h-col").value, $("#h-bud").value, $("#h-time").value); S.color[c.id] = c.colors.findIndex(k => k.n === l.colour);
+      aiPush(c.id, { from: "card", html: `<div class="ccard">✅ Sent to <b>${esc(dealerFor(c, S.city).name)}</b> as a <span class="pill ${l.tag === "Hot" ? "p-red" : l.tag === "Warm" ? "p-amb" : "p-gr"}">${l.tag} lead</span>. Your number stays hidden; you'll be notified when they reply.</div>` });
+      S.chat.mode = "dealer"; renderDrawer(); dealerAutoReply(l.id); break; }
+    case "mode": S.chat.mode = el.dataset.m; renderDrawer(); break;
+    case "slot": el.parentElement.querySelectorAll(".slot").forEach(b => b.classList.remove("on")); el.classList.add("on"); break;
+    case "book": { const card = el.closest(".ccard"), day = card.querySelector('[data-g="day"] .on').textContent, time = card.querySelector('[data-g="time"] .on').textContent, where = card.querySelector('[data-g="where"] .on').textContent.replace(/^\S+\s/, "").toLowerCase();
+      let id = S.buyerLead[c.id]; if (!id) id = createLead(c, c.variants[1].n, colorOf(c).n, "₹10–13 lakh", "This month").id;
+      const l = S.leads.find(x => x.id === id); l.status = "Test drive requested"; l.td = { day, time, confirmed: false }; l.timeline = "This month"; l.tag = leadTag(l);
+      S.threads[id].push({ from: "buyer", text: `Test drive request: ${day}, ${time}, ${where}` }); S.live.testDrives++; S.chat.mode = "dealer"; toast("Slot requested · the dealer will confirm in chat"); renderDrawer();
+      setTimeout(() => { if (S.afterHours) { S.threads[id].push({ from: "dealer", text: "Got your test drive request! We're closed now and will confirm first thing in the morning." }); notify(`📅 Test drive request received`); return renderDrawer(); }
+        l.td.confirmed = true; l.status = "Test drive confirmed"; S.threads[id].push({ from: "dealer", text: `Confirmed ✅ ${c.model} ${l.variant} (${l.colour}) test drive on ${day} at ${time}, ${where}. ${where.includes("home") ? "Our executive will bring the car to you." : "Ask for Rohan at the front desk."} See you then!`, locked: !S.inApp }); S.live.dealerReplies++; notify(`📅 Test drive confirmed: ${c.model}, ${day} ${time}`); renderDrawer(); }, 1900); break; }
+    case "share": { const l = S.leads.find(x => x.id === S.buyerLead[c.id]); l.shared = true; S.threads[l.id].push({ from: "sys", text: "You shared your number with this dealer. You can still chat here." }); renderDrawer(); break; }
+    case "spam": { S.live.spam++; const l = S.leads.find(x => x.id === S.buyerLead[c.id]); S.threads[l.id].push({ from: "sys", text: "Reported. Repeat reports lower this dealer's lead priority." }); toast("Thanks. Report sent to trust & safety"); renderDrawer(); break; }
+    case "fb": { const m = (S.ai[S.chat.carId] || []).find(x => x.id == el.dataset.id); if (m.fb !== el.dataset.v && el.dataset.v === "down") { S.live.thumbsDown++; toast("Flagged for review (counts toward the wrong-answer guardrail)"); } m.fb = el.dataset.v; renderDrawer(); break; }
+    case "sl": { const id = el.dataset.id, i = S.shortlist.indexOf(id); if (i >= 0) S.shortlist.splice(i, 1); else { S.shortlist.push(id); toast(`♥ ${car(id).model} added to your shortlist (${S.shortlist.length})`); } const y = scrollY; renderPage(); scrollTo(0, y); break; }
+    case "dsstart": requireApp("Decision Score is in the app", "Answer 5 quick questions and get a personalised score for every car on your shortlist. Your answers and shortlist sync to the app.", () => { S.dsDraft = S.dsAns ? JSON.parse(JSON.stringify(S.dsAns)) : { family: null, use: null, budget: null, flex: 0.1, fuel: null, ranks: [] }; S.modal = { type: "ds", step: 0 }; renderModal(); }); break;
+    case "dspick": { const k = el.dataset.k, v = el.dataset.v; S.dsDraft[k] = ["family", "budget"].includes(k) ? +v : v; renderModal(); break; }
+    case "dsflex": S.dsDraft.flex = +el.dataset.v; renderModal(); break;
+    case "dsrank": { const k = el.dataset.k, r = S.dsDraft.ranks; if (!r.includes(k)) r.push(k); renderModal(); break; }
+    case "dsreset": S.dsDraft.ranks = []; renderModal(); break;
+    case "dsnext": if (S.dsDraft[DS_Q[S.modal.step].k] != null) { S.modal.step++; renderModal(); } break;
+    case "dsback": S.modal.step--; renderModal(); break;
+    case "dsdone": if (S.dsDraft.ranks.length >= 3) { S.dsAns = S.dsDraft; S.modal = null; renderModal(); if (S.shortlist.length < 2) toast("Shortlist at least 2 cars to see scores"); S.view = "buyer"; go("shortlist"); } break;
+    case "getapp": requireApp(null, null, null); break;
+    case "install": doInstall(); break;
+    case "closemodal": S.modal = null; S.pendingAfterInstall = null; renderModal(); break;
+    case "mbg": if (e.target === el) { S.modal = null; S.pendingAfterInstall = null; renderModal(); } break;
+    case "ry": S.resale.years = +el.dataset.v; { const y = scrollY; renderPage(); scrollTo(0, y); } break;
+    case "rk": S.resale.km = +el.dataset.v; { const y = scrollY; renderPage(); scrollTo(0, y); } break;
+    case "lock": { const cc = car(S.carId); requireApp("Lock your buy-back price in the app", "Your lock-in certificate lives in the app, so it's there when you sell.", () => { const r = resaleEstimate(cc, S.resale.years, S.resale.km, S.city); S.locks[cc.id] = { lock: r.lock, years: S.resale.years }; S.modal = { type: "lock", carId: cc.id, r, years: S.resale.years, km: S.resale.km }; renderModal(); const y = scrollY; renderPage(); scrollTo(0, y); }); break; }
+    case "testdrive": { const cc = car(S.carId); openChat(cc.id); aiPush(cc.id, { from: "u", text: "Book a test drive" }); aiPush(cc.id, { from: "card", html: testDriveCard(cc) }); renderDrawer(); break; }
+    case "tdhome": go("model", "creta"); setTimeout(() => { const cc = car("creta"); openChat(cc.id); aiPush(cc.id, { from: "u", text: "Book a test drive" }); aiPush(cc.id, { from: "card", html: testDriveCard(cc) }); renderDrawer(); }, 50); break;
+    case "vcall": { const l = S.leads.find(x => x.id === S.buyerLead[c.id]); S.threads[l.id].push({ from: "sys", text: "Calling via CarSafar virtual number 080-4718-XX21. The dealer sees a masked number; your real number stays hidden." }); renderDrawer(); break; }
+    case "bannerx": S.bannerDismissed[S.carId] = true; el.closest(".cbanner").remove(); break;
+    case "setcity": S.city = el.dataset.v; { const y = scrollY; renderPage(); scrollTo(0, y); } toast(`📍 City set to ${S.city}: prices updated`); break;
+    case "slds": { const id = el.dataset.id; if (!S.shortlist.includes(id)) S.shortlist.push(id); go("shortlist"); if (!S.dsAns && S.shortlist.length >= 2) setTimeout(() => document.querySelector('[data-act="dsstart"]').click(), 60); break; }
+    case "view": setView(el.dataset.v); break;
+    case "pick": S.activeLead = el.dataset.id; renderDealer(); break;
+    case "qr": dealerSend(el.textContent); break;
+    case "ah": S.afterHours = !S.afterHours; renderDealer(); break;
+    case "confirm": { const l = S.leads.find(x => x.id === S.activeLead); l.td.confirmed = true; l.status = "Test drive confirmed"; dealerSend(`Confirmed ✅ Test drive on ${l.td.day} at ${l.td.time}. See you then!`); break; }
+    case "offer": { const id = $("#o-car").value, amt = parseInt($("#o-amt").value || "0"), oc = car(id); if (!amt || amt < 1000) return toast("Enter a discount of at least ₹1,000");
+      if (S.alerts[id]) notify(`🏷️ Price drop: ${inr(amt)} off on the ${oc.model}`); toast(S.alerts[id] ? "Offer posted · alert sent to subscribed buyers (incl. you)" : `Offer posted · no buyer in this demo has an alert on the ${oc.model} yet`); break; }
+  }
+});
+function setView(v) { S.view = v; S.chat = null; S.notesOpen = false; renderDrawer(); location.hash = v === "buyer" ? (S.route === "model" ? "car-" + S.carId : S.route) : v; renderPage(); window.scrollTo(0, 0); }
+document.addEventListener("change", e => {
+  const a = e.target.dataset.act;
+  if (a === "city") { S.city = e.target.value; const y = scrollY; renderPage(); scrollTo(0, y); if (S.chat) renderDrawer(); }
+  if (a === "sort") { S.filters.sort = e.target.value; renderPage(); }
+});
+window.addEventListener("resize", () => { const h = document.querySelector(".hdr"); if (h) document.documentElement.style.setProperty("--hh", h.offsetHeight + "px"); });
+window.addEventListener("scroll", () => {
+  const nav = document.getElementById("mnav"); if (!nav) return;
+  let cur = "overview"; nav.querySelectorAll("a").forEach(a => { const t = document.getElementById(a.getAttribute("href").slice(1)); if (t && t.getBoundingClientRect().top < 160) cur = t.id; });
+  nav.querySelectorAll("a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + cur));
+}, { passive: true });
+document.addEventListener("input", e => { if (e.target.dataset.act === "emi") { S.emi[e.target.dataset.k] = +e.target.value; updateEmi(); } });
+document.addEventListener("submit", e => {
+  e.preventDefault(); const a = e.target.dataset.act;
+  if (a === "heroask") { const t = $("#heroq").value.trim(); if (!t) return; const named = findCarsPublic(t)[0]; openChat(named ? named.id : null, t); }
+  if (a === "send") { const t = $("#q").value.trim(); if (t) sendBuyer(t); }
+  if (a === "dsend") { const t = $("#dq").value.trim(); if (t) dealerSend(t); }
+});
+document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (S.modal) { S.modal = null; S.pendingAfterInstall = null; return renderModal(); } if (S.chat || S.notesOpen) { S.chat = null; S.notesOpen = false; renderDrawer(); } });
+function sendBuyer(t) {
+  const c = car(S.chat.carId), leadId = c && S.buyerLead[c.id];
+  if (S.chat.mode === "dealer" && leadId) { S.threads[leadId].push({ from: "buyer", text: t }); if (/test.?drive/i.test(t)) S.threads[leadId].push({ from: "card", html: testDriveCard(c) }); renderDrawer(); dealerAutoReply(leadId); }
+  else ask(t);
+  setTimeout(() => $("#q") && $("#q").focus(), 30);
+}
+// listing: "under 8 lakh" pseudo-filter
+const _filtered = filtered;
+filtered = function () { const l = _filtered(); return S.filters.maxp ? l.filter(c => c.variants[0].p < S.filters.maxp) : l; };
+
+seedLeads();
+(function init() { const h = location.hash.slice(1); if (h.startsWith("car-") && car(h.slice(4))) { S.route = "model"; S.carId = h.slice(4); } else if (h === "cars" || h === "shortlist") S.route = h; else if (h === "dealer" || h === "metrics") S.view = h; renderPage(); renderDrawer(); })();
+</script>
+</body>
+</html>

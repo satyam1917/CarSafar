@@ -1,0 +1,12 @@
+CARSAFAR: HOW TO RUN
+
+FIRST: unzip/extract the whole folder. Opening files from inside the zip breaks the images.
+
+1) Quickest: double-click index.html. Everything works in any browser, offline too.
+
+2) Local server (optional):
+   Windows: double-click start-carsafar.bat
+   Mac:     double-click start-carsafar.command (first time: right-click > Open)
+   Then open http://localhost:8000
+
+3) Hosted link: see DEPLOY.md (Vercel, Netlify or GitHub Pages; free, about 2 minutes).
